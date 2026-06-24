@@ -1,0 +1,21 @@
+# ── Secrets — NEVER commit these ──────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Python ────────────────────────────────────────────────
+venv/
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+
+# ── Logs (may contain customer PII) ───────────────────────
+logs/
+*.log
+*.log.*
+
+# ── OS / editor ───────────────────────────────────────────
+.DS_Store
+.vscode/
+.idea/

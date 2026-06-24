@@ -1,0 +1,34 @@
+# ── Secrets — NEVER commit ────────────────────────────────
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+
+# ── Python ────────────────────────────────────────────────
+venv/
+**/venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+
+# ── Node / frontend build ─────────────────────────────────
+node_modules/
+**/node_modules/
+dist/
+**/dist/
+
+# ── Logs (may contain customer PII) ───────────────────────
+logs/
+**/logs/
+*.log
+*.log.*
+
+# ── OS / editor ───────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+.vscode/
+.idea/
+
+# ── Misc ──────────────────────────────────────────────────
+files.zip
