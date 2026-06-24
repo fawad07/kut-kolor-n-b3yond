@@ -158,7 +158,13 @@ body {
   text-transform: uppercase; color: #A08890; font-weight: 500;
 }
 
-.admin-table { width: 100%; border-collapse: collapse; min-width: 960px; }
+.admin-table { width: 100%; border-collapse: collapse; }
+
+/* Slim, on-brand scrollbar — only appears on very narrow screens */
+.admin-table-wrap { scrollbar-width: thin; scrollbar-color: #DEC8CE transparent; }
+.admin-table-wrap::-webkit-scrollbar { height: 8px; }
+.admin-table-wrap::-webkit-scrollbar-track { background: transparent; }
+.admin-table-wrap::-webkit-scrollbar-thumb { background: #DEC8CE; border-radius: 4px; }
 
 .admin-table th {
   text-align: left; padding: 12px 16px;
@@ -169,14 +175,12 @@ body {
   white-space: nowrap;
 }
 
-.admin-table th:last-child { min-width: 240px; }
-
 .admin-table td {
   padding: 14px 16px; border-bottom: 1px solid #F2E8EC;
-  font-size: 13px; color: #3A2830; vertical-align: middle;
+  font-size: 13px; color: #3A2830; vertical-align: top;
 }
 
-.admin-table td:last-child { min-width: 240px; vertical-align: top; padding-top: 16px; }
+.admin-table td:last-child { padding-top: 14px; }
 
 .admin-table tr:last-child td { border-bottom: none; }
 .admin-table tr:hover td { background: #FDF4F6; }
@@ -330,17 +334,16 @@ body {
   .admin-conn-banner { left: 0; flex-wrap: wrap; }
 }
 
-/* ── Actions column fix ── */
+/* ── Actions column ── */
 .admin-table th:last-child,
 .admin-table td:last-child {
-  min-width: 280px;
-  width: 280px;
-  padding-right: 24px;
+  width: 150px;
+  padding-right: 20px;
 }
 
 .admin-table th:not(:last-child),
 .admin-table td:not(:last-child) {
-  padding: 12px 10px;
+  padding: 12px 12px;
 }
 
 .admin-actions {

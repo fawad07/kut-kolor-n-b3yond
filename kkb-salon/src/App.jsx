@@ -1897,37 +1897,45 @@ function AdminBookings({ bookings, onRefresh, showToast }) {
           <table className="admin-table">
             <thead>
               <tr>
-                <th>Ref</th><th>Client</th><th>Email</th><th>Phone</th>
-                <th>Service</th><th>Stylist</th><th>Date</th>
-                <th>Time</th><th>Card</th><th>Status</th><th>Actions</th>
+                <th>Ref</th><th>Client</th><th>Service</th>
+                <th>When</th><th>Card</th><th>Status</th><th>Actions</th>
               </tr>
             </thead>
             <tbody>
               {filtered.map(b => (
                 <tr key={b.id}>
-                  <td style={{ color:"#C4748A", fontSize:"11px" }}>
+                  <td style={{ color:"#C4748A", fontSize:"11px", whiteSpace:"nowrap" }}>
                     KKB-{String(b.id).padStart(4, "0")}
                   </td>
-                  <td style={{ fontWeight:500, color:"#3A2830" }}>
-                    {search && b.full_name?.toLowerCase().includes(search.toLowerCase())
-                      ? <span dangerouslySetInnerHTML={{__html: b.full_name.replace(
-                          new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")})`, "gi"),
-                          "<mark style='background:rgba(196,116,138,0.2);color:#3A2830;padding:0 2px'>$1</mark>"
-                        )}} />
-                      : b.full_name
-                    }
+                  {/* Client — name, email, phone stacked */}
+                  <td>
+                    <div style={{ fontWeight:500, color:"#3A2830" }}>
+                      {search && b.full_name?.toLowerCase().includes(search.toLowerCase())
+                        ? <span dangerouslySetInnerHTML={{__html: b.full_name.replace(
+                            new RegExp(`(${search.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")})`, "gi"),
+                            "<mark style='background:rgba(196,116,138,0.2);color:#3A2830;padding:0 2px'>$1</mark>"
+                          )}} />
+                        : b.full_name
+                      }
+                    </div>
+                    <div style={{ color:"#7A5C64", fontSize:"12px", marginTop:"3px" }}>{b.email}</div>
+                    <div style={{ color:"#A08890", fontSize:"12px" }}>
+                      {search && search.replace(/\D/g,"").length >= 3 && b.phone?.replace(/\D/g,"").includes(search.replace(/\D/g,""))
+                        ? <span style={{color:"#C4748A", fontWeight:500}}>{b.phone}</span>
+                        : b.phone
+                      }
+                    </div>
                   </td>
-                  <td style={{ color:"#7A5C64", fontSize:"12px" }}>{b.email}</td>
-                  <td style={{ color:"#A08890", fontSize:"12px" }}>
-                    {search && search.replace(/\D/g,"").length >= 3 && b.phone?.replace(/\D/g,"").includes(search.replace(/\D/g,""))
-                      ? <span style={{color:"#C4748A", fontWeight:500}}>{b.phone}</span>
-                      : b.phone
-                    }
+                  {/* Service + stylist stacked */}
+                  <td style={{ color:"#3A2830", fontSize:"13px" }}>
+                    {b.service}
+                    <div style={{ color:"#A08890", fontSize:"12px", marginTop:"3px" }}>{b.stylist}</div>
                   </td>
-                  <td style={{ color: "#aaa" }}>{b.service}</td>
-                  <td style={{ color: "#888", fontSize: "12px" }}>{b.stylist}</td>
-                  <td>{b.preferred_date}</td>
-                  <td>{b.preferred_time}</td>
+                  {/* When — date + time stacked */}
+                  <td style={{ whiteSpace:"nowrap" }}>
+                    {b.preferred_date}
+                    <div style={{ color:"#A08890", fontSize:"12px", marginTop:"3px" }}>{b.preferred_time}</div>
+                  </td>
                   <td style={{ fontSize:"12px", whiteSpace:"nowrap" }}>
                     {b.card_last4
                       ? <span style={{ color:"#C4748A" }}>{b.card_brand} ****{b.card_last4}</span>
