@@ -26,8 +26,11 @@ from auth import client_ip
 
 load_dotenv()
 
-# ── Create all tables on startup ──────────────────────────
-# In production you would use Alembic migrations instead.
+# ── Create any missing tables on startup ──────────────────
+# Convenience for local/dev so a fresh database just works. Schema
+# *changes* are managed with Alembic migrations (see migrations/ and
+# migrations/README) — run `alembic upgrade head` to apply them.
+# create_all only adds missing tables; it never alters existing ones.
 Base.metadata.create_all(bind=engine)
 
 # ── App instance ──────────────────────────────────────────

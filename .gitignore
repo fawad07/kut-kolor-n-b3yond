@@ -32,3 +32,6 @@ logs/
 
 # ── Misc ──────────────────────────────────────────────────
 files.zip
+
+# Local / temp SQLite databases
+*.db
