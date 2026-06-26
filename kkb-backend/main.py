@@ -12,13 +12,17 @@ Interactive API docs available at:
 """
 
 import os
-from fastapi import FastAPI
+import time
+import logging
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import JSONResponse
 from dotenv import load_dotenv
 
 from database import engine, Base
 from routers import bookings, contact, logs, auth_router, payments
-from logger import log_server_start
+from logger import log_server_start, get_request_logger
+from auth import client_ip
 
 load_dotenv()
 
@@ -50,6 +54,54 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+# ── Request logging middleware ────────────────────────────
+# Logs EVERY request (method, path, status, IP, duration) so nothing is
+# left unaudited. Unhandled errors are logged with a full traceback.
+# The log-viewer and health endpoints are skipped so reading the audit
+# log (and uptime pings) don't flood it with self-referential noise.
+request_logger = get_request_logger()
+_SKIP_LOG_PREFIXES = ("/logs", "/health", "/docs", "/redoc", "/openapi.json")
+
+
+@app.middleware("http")
+async def log_requests(request: Request, call_next):
+    path = request.url.path
+    if path == "/" or path.startswith(_SKIP_LOG_PREFIXES):
+        return await call_next(request)
+
+    start = time.time()
+    ip = client_ip(request)
+    try:
+        response = await call_next(request)
+    except Exception:
+        duration = round((time.time() - start) * 1000, 1)
+        request_logger.error(
+            f"{request.method} {path} → 500 (unhandled)",
+            extra={
+                "category": "request", "action": "request_error",
+                "method": request.method, "path": path,
+                "status_code": 500, "ip": ip, "duration_ms": duration,
+            },
+            exc_info=True,
+        )
+        return JSONResponse(status_code=500, content={"detail": "Internal server error."})
+
+    duration = round((time.time() - start) * 1000, 1)
+    code = response.status_code
+    level = logging.INFO if code < 400 else logging.WARNING if code < 500 else logging.ERROR
+    request_logger.log(
+        level,
+        f"{request.method} {path} → {code}",
+        extra={
+            "category": "request", "action": "http_request",
+            "method": request.method, "path": path,
+            "query": request.url.query or "",
+            "status_code": code, "ip": ip, "duration_ms": duration,
+        },
+    )
+    return response
+
 
 # ── Routers ───────────────────────────────────────────────
 app.include_router(bookings.router)

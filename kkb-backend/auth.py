@@ -20,12 +20,16 @@ Setup:
 """
 
 import os
+import time
 import jwt
+from collections import defaultdict
 from datetime import datetime, timedelta, timezone
 from passlib.context import CryptContext
 from fastapi import Request, HTTPException, status, Response
+from sqlalchemy.orm import Session
 from dotenv import load_dotenv
 from logger import get_admin_logger
+from models import AdminSetting
 
 load_dotenv()
 
@@ -37,22 +41,79 @@ JWT_ALGORITHM        = "HS256"
 TOKEN_EXPIRY_MINUTES = 10  # inactivity timeout
 COOKIE_NAME          = "kkb_admin_session"
 
+# Used only to bootstrap the DB the very first time — the live hash is
+# stored in the admin_settings table thereafter (survives redeploys).
 ADMIN_PASSWORD_HASH = os.getenv("ADMIN_PASSWORD_HASH", "")
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 
-def _check_config():
+def _check_jwt():
     if not JWT_SECRET:
         raise RuntimeError(
             "JWT_SECRET is not set in .env. "
             "Generate one with: python3 -c \"import secrets; print(secrets.token_hex(32))\""
         )
-    if not ADMIN_PASSWORD_HASH:
-        raise RuntimeError(
-            "ADMIN_PASSWORD_HASH is not set in .env. "
-            "Generate one with: python3 -c \"from auth import hash_password; print(hash_password('your-password'))\""
-        )
+
+
+# ── Login brute-force rate limiting (per IP, in-memory) ───
+MAX_FAILED_ATTEMPTS = 5          # before lockout
+ATTEMPT_WINDOW_SEC  = 15 * 60    # rolling window
+_failed_attempts: dict = defaultdict(list)  # ip -> [timestamps]
+
+
+def client_ip(request: Request) -> str:
+    """Real client IP, honouring X-Forwarded-For when behind a proxy/host."""
+    fwd = request.headers.get("x-forwarded-for")
+    if fwd:
+        return fwd.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
+def _recent_attempts(ip: str) -> list:
+    now = time.time()
+    recent = [t for t in _failed_attempts.get(ip, []) if now - t < ATTEMPT_WINDOW_SEC]
+    _failed_attempts[ip] = recent
+    return recent
+
+
+def is_rate_limited(ip: str) -> bool:
+    return len(_recent_attempts(ip)) >= MAX_FAILED_ATTEMPTS
+
+
+def record_failed_attempt(ip: str) -> None:
+    _recent_attempts(ip).append(time.time())
+
+
+def reset_attempts(ip: str) -> None:
+    _failed_attempts.pop(ip, None)
+
+
+# ── Admin password hash — stored in the database ──────────
+def get_password_hash(db: Session) -> str:
+    """
+    Return the current admin password hash from the database.
+    On first use, bootstrap it from the ADMIN_PASSWORD_HASH env value.
+    """
+    setting = db.query(AdminSetting).first()
+    if setting:
+        return setting.password_hash
+    if ADMIN_PASSWORD_HASH:
+        setting = AdminSetting(password_hash=ADMIN_PASSWORD_HASH)
+        db.add(setting)
+        db.commit()
+        return ADMIN_PASSWORD_HASH
+    return ""
+
+
+def set_password_hash(db: Session, new_hash: str) -> None:
+    """Persist a new admin password hash to the database."""
+    setting = db.query(AdminSetting).first()
+    if setting:
+        setting.password_hash = new_hash
+    else:
+        db.add(AdminSetting(password_hash=new_hash))
+    db.commit()
 
 
 # ── Password helpers ──────────────────────────────────────
@@ -68,7 +129,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 # ── Token helpers ──────────────────────────────────────────
 def create_access_token() -> str:
     """Create a JWT valid for TOKEN_EXPIRY_MINUTES from now."""
-    _check_config()
+    _check_jwt()
     expire = datetime.now(timezone.utc) + timedelta(minutes=TOKEN_EXPIRY_MINUTES)
     payload = {"sub": "admin", "exp": expire, "iat": datetime.now(timezone.utc)}
     return jwt.encode(payload, JWT_SECRET, algorithm=JWT_ALGORITHM)
@@ -76,14 +137,20 @@ def create_access_token() -> str:
 
 def decode_access_token(token: str) -> dict:
     """Decode and validate a JWT. Raises jwt exceptions on failure."""
-    _check_config()
+    _check_jwt()
     return jwt.decode(token, JWT_SECRET, algorithms=[JWT_ALGORITHM])
 
 
 # ── Login logic ───────────────────────────────────────────
-def authenticate(password: str) -> bool:
-    _check_config()
-    return verify_password(password, ADMIN_PASSWORD_HASH)
+def authenticate(db: Session, password: str) -> bool:
+    _check_jwt()
+    current_hash = get_password_hash(db)
+    if not current_hash:
+        raise RuntimeError(
+            "No admin password configured. Set ADMIN_PASSWORD_HASH in .env "
+            "to bootstrap the first password."
+        )
+    return verify_password(password, current_hash)
 
 
 def set_session_cookie(response: Response, token: str) -> None:

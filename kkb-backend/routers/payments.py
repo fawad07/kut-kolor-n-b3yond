@@ -87,8 +87,16 @@ def setup_intent(payload: SetupIntentRequest):
     """
     try:
         result = create_setup_intent(payload.email)
+        logger.info(
+            "SetupIntent created",
+            extra={"category": "payment", "action": "setup_intent_created"},
+        )
         return result
     except Exception as e:
+        logger.error(
+            "SetupIntent failed",
+            extra={"category": "payment", "action": "setup_intent_failed", "reason": str(e)},
+        )
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Payment service unavailable. Please try again.",
@@ -148,6 +156,11 @@ def save_card(
         }
 
     except Exception as e:
+        logger.error(
+            "Card save failed",
+            extra={"category": "payment", "action": "card_save_failed",
+                   "booking_id": booking_id, "reason": str(e)},
+        )
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
             detail="Could not save card. Please try again.",
@@ -257,6 +270,12 @@ def charge_fee(
         booking.payment_status = PaymentStatus.fee_failed
         db.commit()
 
+        logger.error(
+            "Cancellation fee charge failed",
+            extra={"category": "payment", "action": "fee_charge_failed",
+                   "booking_id": booking_id, "amount": payload.amount,
+                   "reason": str(e)},
+        )
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail=f"Card charge failed: {str(e)}. Booking has not been cancelled.",

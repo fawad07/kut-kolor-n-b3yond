@@ -2096,11 +2096,13 @@ function AdminLogs() {
   const [lastFetch, setLastFetch] = useState(null);
 
   const FILTERS = [
-    { id: "all",     label: "All",      endpoint: "/logs/recent?limit=100"          },
-    { id: "booking", label: "Bookings", endpoint: "/logs/bookings?limit=100"        },
-    { id: "admin",   label: "Admin",    endpoint: "/logs/admin?limit=100"           },
-    { id: "contact", label: "Contact",  endpoint: "/logs/recent?limit=100&category=contact" },
-    { id: "error",   label: "Errors",   endpoint: "/logs/errors?limit=100"          },
+    { id: "all",      label: "All",      endpoint: "/logs/recent?limit=100"          },
+    { id: "booking",  label: "Bookings", endpoint: "/logs/bookings?limit=100"        },
+    { id: "admin",    label: "Admin",    endpoint: "/logs/admin?limit=100"           },
+    { id: "contact",  label: "Contact",  endpoint: "/logs/recent?limit=100&category=contact" },
+    { id: "payment",  label: "Payments", endpoint: "/logs/recent?limit=100&category=payment" },
+    { id: "request",  label: "Requests", endpoint: "/logs/recent?limit=200&category=request" },
+    { id: "error",    label: "Errors",   endpoint: "/logs/errors?limit=100"          },
   ];
 
   async function fetchLogs(f = filter) {

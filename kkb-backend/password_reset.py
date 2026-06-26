@@ -20,10 +20,11 @@ Reset tokens:
 
 import os
 import secrets
-import re as regex
 from datetime import datetime, timedelta, timezone
 from dotenv import load_dotenv
-from auth import hash_password, pwd_context
+from sqlalchemy.orm import Session
+from auth import hash_password, verify_password, get_password_hash, set_password_hash
+from models import PasswordResetToken
 from logger import get_admin_logger
 
 load_dotenv()
@@ -36,88 +37,70 @@ SALON_NAME           = os.getenv("SALON_NAME", "Kut, Kolor N B3yond")
 ADMIN_RECOVERY_EMAIL = os.getenv("ADMIN_RECOVERY_EMAIL", "")
 FRONTEND_URL         = os.getenv("FRONTEND_URL", "http://localhost:5173")
 
-# In-memory token store: { token: { expires_at: datetime } }
-_reset_tokens: dict = {}
-
 TOKEN_EXPIRY_MINUTES = 15
-ENV_FILE_PATH = os.path.join(os.path.dirname(__file__), ".env")
 
 
-# ── Token management ──────────────────────────────────────
+# ── Token management (database-backed) ────────────────────
 
-def generate_reset_token() -> str:
-    """Generate a secure random reset token and store it with expiry."""
-    # Clean up expired tokens first
+def generate_reset_token(db: Session) -> str:
+    """Generate a secure random reset token and persist it with expiry."""
     now = datetime.now(timezone.utc)
-    expired = [t for t, v in _reset_tokens.items() if v["expires_at"] < now]
-    for t in expired:
-        del _reset_tokens[t]
+
+    # Clean up expired/used tokens so the table doesn't grow forever
+    db.query(PasswordResetToken).filter(
+        (PasswordResetToken.expires_at < now) | (PasswordResetToken.used.is_(True))
+    ).delete(synchronize_session=False)
 
     token = secrets.token_urlsafe(32)
-    _reset_tokens[token] = {
-        "expires_at": now + timedelta(minutes=TOKEN_EXPIRY_MINUTES),
-    }
+    db.add(PasswordResetToken(
+        token=token,
+        expires_at=now + timedelta(minutes=TOKEN_EXPIRY_MINUTES),
+        used=False,
+    ))
+    db.commit()
     return token
 
 
-def validate_reset_token(token: str) -> bool:
-    """Returns True if the token exists and has not expired."""
-    entry = _reset_tokens.get(token)
-    if not entry:
+def validate_reset_token(db: Session, token: str) -> bool:
+    """Returns True if the token exists, is unused, and has not expired."""
+    entry = db.query(PasswordResetToken).filter(
+        PasswordResetToken.token == token
+    ).first()
+    if not entry or entry.used:
         return False
-    if entry["expires_at"] < datetime.now(timezone.utc):
-        del _reset_tokens[token]
-        return False
-    return True
+
+    # Compare timezone-aware now with stored expiry (normalise if naive)
+    expires = entry.expires_at
+    if expires.tzinfo is None:
+        expires = expires.replace(tzinfo=timezone.utc)
+    return expires >= datetime.now(timezone.utc)
 
 
-def consume_reset_token(token: str) -> None:
-    """Delete the token after use — single use only."""
-    _reset_tokens.pop(token, None)
+def consume_reset_token(db: Session, token: str) -> None:
+    """Mark the token used — single use only."""
+    entry = db.query(PasswordResetToken).filter(
+        PasswordResetToken.token == token
+    ).first()
+    if entry:
+        entry.used = True
+        db.commit()
 
 
-# ── .env update ───────────────────────────────────────────
+# ── Password update (database-backed) ─────────────────────
 
-def update_env_password(new_password: str) -> None:
+def is_same_as_current(db: Session, new_password: str) -> bool:
+    """True if new_password matches the current admin password."""
+    current = get_password_hash(db)
+    return bool(current) and verify_password(new_password, current)
+
+
+def update_admin_password(db: Session, new_password: str) -> None:
+    """Hash the new password and persist it to the database.
+
+    The audit log entry (with IP) is written by the reset-password
+    endpoint so the whole lifecycle is recorded in one place.
     """
-    Hashes the new password and writes the updated hash back to .env.
-    Replaces the ADMIN_PASSWORD_HASH line in place.
-    All other .env values are preserved.
-    """
-    new_hash = hash_password(new_password)
-
-    # Read current .env
-    if not os.path.exists(ENV_FILE_PATH):
-        raise FileNotFoundError(f".env file not found at {ENV_FILE_PATH}")
-
-    with open(ENV_FILE_PATH, "r") as f:
-        content = f.read()
-
-    # Replace or append ADMIN_PASSWORD_HASH
-    if "ADMIN_PASSWORD_HASH=" in content:
-        content = regex.sub(
-            r"^ADMIN_PASSWORD_HASH=.*$",
-            f"ADMIN_PASSWORD_HASH={new_hash}",
-            content,
-            flags=regex.MULTILINE,
-        )
-    else:
-        content += f"\nADMIN_PASSWORD_HASH={new_hash}\n"
-
-    with open(ENV_FILE_PATH, "w") as f:
-        f.write(content)
-
-    # Reload the env so the running process picks up the new hash
-    load_dotenv(override=True)
-
-    # Update auth module's in-process value immediately
-    import auth as auth_module
-    auth_module.ADMIN_PASSWORD_HASH = new_hash
-
-    logger.info(
-        "Admin password reset successfully",
-        extra={"category": "admin", "action": "password_reset"},
-    )
+    set_password_hash(db, hash_password(new_password))
 
 
 # ── Email ─────────────────────────────────────────────────

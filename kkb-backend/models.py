@@ -136,3 +136,40 @@ class ContactMessage(Base):
             f"<ContactMessage id={self.id} name={self.name!r} "
             f"email={self.email!r} status={self.status}>"
         )
+
+
+class AdminSetting(Base):
+    """
+    Single-row table holding the admin password hash.
+
+    Stored in the database (not the .env file) so a password reset
+    survives server restarts and redeploys on cloud hosts where the
+    filesystem is ephemeral. Bootstrapped once from ADMIN_PASSWORD_HASH.
+    """
+    __tablename__ = "admin_settings"
+
+    id            = Column(Integer, primary_key=True)
+    password_hash = Column(String(255), nullable=False)
+    updated_at    = Column(
+                      DateTime(timezone=True),
+                      nullable=False,
+                      default=lambda: datetime.now(timezone.utc),
+                      onupdate=lambda: datetime.now(timezone.utc),
+                    )
+
+
+class PasswordResetToken(Base):
+    """
+    One-time password-reset tokens, persisted so they remain valid
+    across restarts and shared across worker processes.
+    """
+    __tablename__ = "password_reset_tokens"
+
+    token      = Column(String(128), primary_key=True)
+    expires_at = Column(DateTime(timezone=True), nullable=False)
+    used       = Column(Boolean, nullable=False, default=False)
+    created_at = Column(
+                   DateTime(timezone=True),
+                   nullable=False,
+                   default=lambda: datetime.now(timezone.utc),
+                 )

@@ -131,6 +131,24 @@ def get_contact_logger() -> logging.Logger:
     return logger
 
 
+def get_request_logger() -> logging.Logger:
+    """
+    Logger for the HTTP access log — one entry per request.
+    Also writes to requests.log (dedicated access log) and errors.log
+    (so any 4xx/5xx request is captured alongside other errors).
+    """
+    logger = logging.getLogger("kkb.request")
+    if logger.handlers:
+        return logger
+
+    logger.setLevel(logging.DEBUG)
+    logger.addHandler(_make_handler("app.log",      logging.DEBUG))
+    logger.addHandler(_make_handler("requests.log", logging.DEBUG))
+    logger.addHandler(_make_handler("errors.log",   logging.WARNING))
+    logger.propagate = False
+    return logger
+
+
 # ── Convenience log functions ─────────────────────────────
 
 def log_booking_created(booking) -> None:
