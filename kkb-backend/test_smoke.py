@@ -58,7 +58,7 @@ def check(name, cond, detail=""):
 def booking(**over):
     b = dict(full_name="Test Client", email="client@example.com",
              phone="(555) 123-4567", service="Haircut", stylist="Any available",
-             preferred_date=FUTURE, preferred_time="10:00 AM", notes="")
+             preferred_date=FUTURE, preferred_time="10:00 AM", notes="", agreed=True)
     b.update(over); return b
 
 print("\n── Public booking flow ──────────────────────────────")
@@ -86,6 +86,12 @@ check("Bad phone rejected → 422", r.status_code == 422, f"got {r.status_code}"
 
 r = client.post("/bookings/", json=booking(email="not-an-email"))
 check("Bad email rejected → 422", r.status_code == 422, f"got {r.status_code}")
+
+r = client.post("/bookings/", json=booking(agreed=False, preferred_time="5:30 PM"))
+check("Booking without consent rejected → 400", r.status_code == 400, f"got {r.status_code}")
+
+r = client.post("/bookings/", json=booking(preferred_time="6:30 PM"))
+check("Consent recorded on booking", r.json().get("consent_agreed") is True, r.text)
 
 print("\n── Auth enforcement ─────────────────────────────────")
 check("GET /bookings/ no cookie → 401", client.get("/bookings/").status_code == 401)

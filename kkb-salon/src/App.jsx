@@ -114,10 +114,259 @@ function Footer({ navigate }) {
         </div>
       </div>
       <div className="footer-bottom">
-        <span>© 2025 Kut, Kolor N B3yond</span>
-        <span>Privacy · Terms</span>
+        <span>© 2026 Kut, Kolor N B3yond</span>
+        <span>
+          <span onClick={() => navigate("Privacy")} style={{ cursor: "pointer" }}>Privacy</span>
+          {" · "}
+          <span onClick={() => navigate("Terms")} style={{ cursor: "pointer" }}>Terms</span>
+        </span>
       </div>
     </footer>
+  );
+}
+
+// ── Legal pages ───────────────────────────────────────────
+const LEGAL_UPDATED = "June 27, 2026";
+
+const LH = ({ children }) => (
+  <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic",
+    fontSize: "26px", color: "#3A2830", margin: "36px 0 12px", fontWeight: 400 }}>
+    {children}
+  </h2>
+);
+const LP = ({ children }) => (
+  <p style={{ marginBottom: "14px" }}>{children}</p>
+);
+const LLink = ({ to, navigate, children }) => (
+  <span onClick={() => navigate(to)}
+    style={{ color: "#C4748A", textDecoration: "underline", cursor: "pointer" }}>
+    {children}
+  </span>
+);
+
+function LegalLayout({ navigate, title, children }) {
+  return (
+    <>
+      <div style={{ background: "#FDFAF7", padding: "140px 24px 90px" }}>
+        <div style={{ maxWidth: "760px", margin: "0 auto" }}>
+          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic",
+            fontSize: "clamp(34px, 6vw, 54px)", color: "#3A2830", marginBottom: "8px",
+            fontWeight: 400, lineHeight: 1.05 }}>
+            {title}
+          </h1>
+          <p style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase",
+            color: "#A08890", marginBottom: "40px" }}>
+            Last updated {LEGAL_UPDATED}
+          </p>
+          <div style={{ fontSize: "15px", lineHeight: 1.8, color: "#5C4951" }}>
+            {children}
+          </div>
+        </div>
+      </div>
+      <Footer navigate={navigate} />
+    </>
+  );
+}
+
+function PrivacyPage({ navigate }) {
+  return (
+    <LegalLayout navigate={navigate} title="Privacy Policy">
+      <LP>
+        This Privacy Policy explains how <strong>[LEGAL BUSINESS NAME]</strong> (“we,” “us,”
+        or “our”), operating the Kut, Kolor N B3yond salon and this website, collects, uses,
+        and protects your information when you use our website and booking services.
+      </LP>
+
+      <LH>Information we collect</LH>
+      <LP>
+        <strong>Information you provide:</strong> your name, email address, phone number,
+        appointment details (service, stylist, date, time), any notes you add, and any
+        messages you send through our contact form.
+      </LP>
+      <LP>
+        <strong>Payment information:</strong> when you save a card for a booking, your card
+        details are collected and processed directly by our payment processor, Stripe. We do
+        not store your full card number — we retain only limited details such as the card
+        brand and last four digits for reference.
+      </LP>
+      <LP>
+        <strong>Automatically collected:</strong> basic technical data such as your IP address
+        and request information, recorded in our server logs for security and troubleshooting.
+      </LP>
+
+      <LH>How we use your information</LH>
+      <LP>
+        We use your information to schedule, confirm, and manage your appointments; to contact
+        you about your bookings or inquiries; to process cancellation or no-show fees in
+        accordance with our <LLink to="Terms" navigate={navigate}>Terms of Service</LLink> where
+        you have authorized a card on file; to keep our website secure; and to comply with
+        legal obligations.
+      </LP>
+
+      <LH>Payment processing</LH>
+      <LP>
+        Card payments and card storage are handled by Stripe, Inc. Your card data is
+        transmitted directly to Stripe and is subject to Stripe’s privacy policy. We never see
+        or store your complete card number.
+      </LP>
+
+      <LH>Email</LH>
+      <LP>
+        We use Resend to send transactional emails such as booking confirmations and fee
+        receipts. We do not send marketing email unless you have asked us to.
+      </LP>
+
+      <LH>Cookies</LH>
+      <LP>
+        Our public website does not use third-party advertising or tracking cookies. The
+        staff admin area uses a single essential, first-party cookie to keep authorized salon
+        staff securely logged in.
+      </LP>
+
+      <LH>How we share information</LH>
+      <LP>
+        We do not sell your personal information. We share it only with service providers who
+        help us operate (such as Stripe for payments and Resend for email), or when required
+        by law.
+      </LP>
+
+      <LH>Data retention &amp; security</LH>
+      <LP>
+        We keep your information only as long as needed to provide our services and to meet
+        legal, accounting, or reporting requirements. We use reasonable safeguards — including
+        encrypted connections (HTTPS), hashed admin credentials, and access controls — to
+        protect it. No method of transmission or storage is completely secure.
+      </LP>
+
+      <LH>Your California privacy rights</LH>
+      <LP>
+        If you are a California resident, you may have the right to request access to,
+        correction of, or deletion of the personal information we hold about you, and the right
+        not to have your personal information sold (we do not sell it). To exercise these
+        rights, contact us at <strong>[CONTACT EMAIL]</strong>.
+      </LP>
+
+      <LH>Children’s privacy</LH>
+      <LP>
+        Our services are intended for adults. When a minor receives services, a parent or
+        guardian provides and is responsible for the booking information. We do not knowingly
+        collect information directly from children under 13.
+      </LP>
+
+      <LH>Changes to this policy</LH>
+      <LP>
+        We may update this policy from time to time. The “Last updated” date above reflects the
+        most recent revision.
+      </LP>
+
+      <LH>Contact us</LH>
+      <LP>
+        Questions about this policy? Contact us at <strong>[CONTACT EMAIL]</strong> or{" "}
+        <strong>[PHONE NUMBER]</strong>.
+      </LP>
+    </LegalLayout>
+  );
+}
+
+function TermsPage({ navigate }) {
+  return (
+    <LegalLayout navigate={navigate} title="Terms of Service">
+      <LP>
+        By using this website and our booking services, you agree to these Terms of Service.
+        If you do not agree, please do not use the site. These Terms are offered by{" "}
+        <strong>[LEGAL BUSINESS NAME]</strong>, operating as Kut, Kolor N B3yond.
+      </LP>
+
+      <LH>Appointments &amp; booking</LH>
+      <LP>
+        Submitting the booking form is a request for an appointment. We will confirm
+        availability and may contact you to adjust the time. We reserve the right to decline or
+        reschedule appointments.
+      </LP>
+
+      <LH>Cancellation, no-show &amp; late-cancellation fees</LH>
+      <LP>
+        We ask for at least <strong>24 hours’</strong> notice to cancel or reschedule an
+        appointment. When you book, you may be asked to keep a payment card on file. By saving
+        a card and agreeing to these Terms, you authorize us to charge that card for:
+      </LP>
+      <LP>
+        • a <strong>late-cancellation fee</strong> if you cancel within 24 hours of your
+        appointment; and<br />
+        • a <strong>no-show fee</strong> if you do not attend and do not notify us.
+      </LP>
+      <LP>
+        The fee amount is set by the salon, will be communicated to you, and will not exceed
+        the full price of the booked service. Fees are processed through Stripe. The salon may,
+        at its discretion, waive a fee. Your card is not charged at the time of booking.
+      </LP>
+
+      <LH>Payment authorization</LH>
+      <LP>
+        By providing a card and agreeing to these Terms (including at the time of booking), you
+        authorize <strong>[LEGAL BUSINESS NAME]</strong> to charge that card for the applicable
+        fees described above. Card storage and charges are handled by Stripe.
+      </LP>
+
+      <LH>Pricing</LH>
+      <LP>
+        Listed prices are estimates and may vary based on hair length, condition, and service
+        complexity. Final pricing is confirmed at the salon before service.
+      </LP>
+
+      <LH>Service disclaimer</LH>
+      <LP>
+        Hair and beauty results vary by individual, and we do not guarantee specific results.
+        Please inform your stylist of any allergies, sensitivities, or prior chemical
+        treatments before service; a patch test may be recommended for color services.
+      </LP>
+
+      <LH>Right to refuse service</LH>
+      <LP>
+        We reserve the right to refuse or discontinue service for any lawful reason, including
+        inappropriate or unsafe conduct.
+      </LP>
+
+      <LH>Limitation of liability</LH>
+      <LP>
+        To the fullest extent permitted by law, <strong>[LEGAL BUSINESS NAME]</strong> is not
+        liable for any indirect, incidental, or consequential damages arising from your use of
+        this website or our services. Our total liability for any claim relating to a service
+        will not exceed the amount you paid for that service.
+      </LP>
+
+      <LH>Indemnification</LH>
+      <LP>
+        You agree to indemnify and hold harmless <strong>[LEGAL BUSINESS NAME]</strong> from
+        any claims arising out of your misuse of the site or violation of these Terms.
+      </LP>
+
+      <LH>Website content</LH>
+      <LP>
+        All content on this site — text, images, and branding — is the property of{" "}
+        <strong>[LEGAL BUSINESS NAME]</strong> and may not be reused without permission.
+      </LP>
+
+      <LH>Governing law</LH>
+      <LP>
+        These Terms are governed by the laws of the State of California, without regard to its
+        conflict-of-law principles. Any disputes will be resolved in the state or federal
+        courts located in California.
+      </LP>
+
+      <LH>Changes to these terms</LH>
+      <LP>
+        We may update these Terms at any time. Continued use of the site after changes
+        constitutes acceptance of the revised Terms.
+      </LP>
+
+      <LH>Contact us</LH>
+      <LP>
+        Questions about these Terms? Contact us at <strong>[CONTACT EMAIL]</strong> or{" "}
+        <strong>[PHONE NUMBER]</strong>. See also our{" "}
+        <LLink to="Privacy" navigate={navigate}>Privacy Policy</LLink>.
+      </LP>
+    </LegalLayout>
   );
 }
 
@@ -387,6 +636,15 @@ function ServicesPage({ navigate }) {
             </div>
           </div>
         ))}
+        <p style={{
+          textAlign: "center", fontSize: "14px", fontStyle: "italic",
+          color: T.warm, marginTop: "40px", lineHeight: 1.7,
+          fontFamily: "'Cormorant Garamond', serif",
+        }}>
+          * Prices are a starting guide and may change depending on hair length,
+          thickness, and condition. Your final price is always confirmed at your
+          complimentary consultation.
+        </p>
       </div>
       <Footer navigate={navigate} />
     </div>
@@ -442,7 +700,7 @@ function PackagesPage({ navigate }) {
   );
 }
 
-function BookingPage() {
+function BookingPage({ navigate }) {
   // ── Form state ──────────────────────────────────────────
   const [form, setForm] = useState({
     full_name: "", email: "", phone: "",
@@ -451,6 +709,7 @@ function BookingPage() {
   });
 
   // ── UI state ────────────────────────────────────────────
+  const [agreed,     setAgreed]     = useState(false);
   const [errors,     setErrors]     = useState({});
   const [loading,    setLoading]    = useState(false);
   const [submitted,  setSubmitted]  = useState(false);
@@ -579,6 +838,8 @@ function BookingPage() {
       e.preferred_date = "Please choose a date";
     if (!form.preferred_time)
       e.preferred_time = "Please select a time";
+    if (!agreed)
+      e.agreed = "Please agree to the Terms and Cancellation Policy to continue";
 
     return e;
   }
@@ -595,7 +856,7 @@ function BookingPage() {
       const result = await fetch(`${API}/bookings/`, {
         method:  "POST",
         headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify(form),
+        body:    JSON.stringify({ ...form, agreed }),
       });
       const data = await result.json();
 
@@ -972,6 +1233,35 @@ function BookingPage() {
             )}
           </div>
           )}
+
+          {/* ── Consent / fine print ── */}
+          <div style={{ marginTop: "20px", marginBottom: "16px" }}>
+            <label style={{ display: "flex", alignItems: "flex-start", gap: "10px", cursor: "pointer" }}>
+              <input
+                type="checkbox"
+                checked={agreed}
+                onChange={e => { setAgreed(e.target.checked); setErrors(err => ({ ...err, agreed: "" })); }}
+                style={{ marginTop: "3px", flexShrink: 0, accentColor: T.accent }}
+              />
+              <span style={{ fontSize: "12px", color: T.warm, lineHeight: 1.6 }}>
+                I have read and agree to the{" "}
+                <span onClick={(e) => { e.preventDefault(); navigate("Terms"); }}
+                  style={{ color: T.accent, textDecoration: "underline", cursor: "pointer" }}>
+                  Terms &amp; Cancellation Policy
+                </span>{" "}and{" "}
+                <span onClick={(e) => { e.preventDefault(); navigate("Privacy"); }}
+                  style={{ color: T.accent, textDecoration: "underline", cursor: "pointer" }}>
+                  Privacy Policy
+                </span>. I understand that if I save a card, I authorize it to be charged
+                a cancellation or no-show fee as described in those terms.
+              </span>
+            </label>
+            {errors.agreed && (
+              <p style={{ fontSize: "12px", color: T.accent, marginTop: "6px", marginLeft: "24px" }}>
+                {errors.agreed}
+              </p>
+            )}
+          </div>
 
           <button
             className="btn-primary"
@@ -2946,6 +3236,7 @@ export default function App() {
     Home: HomePage, Services: ServicesPage, Packages: PackagesPage,
     Booking: BookingPage, Stylists: StylistsPage, Gallery: GalleryPage,
     About: AboutPage, Contact: ContactPage,
+    Privacy: PrivacyPage, Terms: TermsPage,
   };
 
   const PageComponent = PAGES[page] || HomePage;

@@ -16,13 +16,14 @@ Conflict rules:
     named stylists are taken at that date/time
 """
 
-from fastapi import APIRouter, Depends, HTTPException, status, Query
+from datetime import datetime, timezone
+from fastapi import APIRouter, Depends, HTTPException, status, Query, Request
 from sqlalchemy.orm import Session
 from sqlalchemy import and_
 from typing import List, Optional
 
 from database import get_db
-from auth import require_admin
+from auth import require_admin, client_ip
 from models import Booking, BookingStatus
 from schemas import BookingCreate, BookingOut, BookingStatusUpdate, MessageResponse
 from logger import (
@@ -142,11 +143,20 @@ def check_availability(
     status_code=status.HTTP_201_CREATED,
     summary="Submit a new booking request",
 )
-def create_booking(payload: BookingCreate, db: Session = Depends(get_db)):
+def create_booking(payload: BookingCreate, request: Request, db: Session = Depends(get_db)):
     """
     Accepts a booking form submission.
     Runs a conflict check before saving — returns 409 if the slot is taken.
+    Requires the client to have agreed to the Terms / Cancellation Policy;
+    that consent is recorded on the booking (flag, timestamp, IP).
     """
+    # Consent is mandatory — never trust the client UI alone
+    if not payload.agreed:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="You must agree to the Terms and Cancellation Policy to book.",
+        )
+
     # Server-side conflict check (source of truth — never trust client alone)
     conflicts = get_conflicts(
         db,
@@ -169,7 +179,15 @@ def create_booking(payload: BookingCreate, db: Session = Depends(get_db)):
             ),
         )
 
-    booking = Booking(**payload.model_dump())
+    # Build the booking, recording consent (the `agreed` field isn't a column)
+    data = payload.model_dump()
+    data.pop("agreed", None)
+    booking = Booking(
+        **data,
+        consent_agreed=True,
+        consent_at=datetime.now(timezone.utc),
+        consent_ip=client_ip(request),
+    )
     db.add(booking)
     db.commit()
     db.refresh(booking)
@@ -296,6 +314,7 @@ def admin_update_booking(
 
     # Update every field directly — no conflict check
     changes = payload.model_dump()
+    changes.pop("agreed", None)  # not a column; only used at public booking time
     for field, value in changes.items():
         setattr(booking, field, value)
 

@@ -85,6 +85,11 @@ class Booking(Base):
     charge_reason            = Column(String(50), nullable=True)     # no_show | late_cancellation | other
     stripe_charge_id         = Column(String(120), nullable=True)    # pi_xxxxx — for refund reference
 
+    # ── Consent / fine print (recorded at booking time) ────
+    consent_agreed  = Column(Boolean, nullable=False, default=False)
+    consent_at      = Column(DateTime(timezone=True), nullable=True)
+    consent_ip      = Column(String(64), nullable=True)
+
     # Timestamps
     created_at      = Column(
                         DateTime(timezone=True),

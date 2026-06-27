@@ -32,6 +32,9 @@ class BookingCreate(BaseModel):
     preferred_date: str
     preferred_time: str
     notes:          Optional[str] = None
+    # Consent to Terms / Cancellation Policy. Required on public booking
+    # (enforced in the create endpoint); ignored on admin edits.
+    agreed:         Optional[bool] = None
 
     @field_validator("full_name")
     @classmethod
@@ -100,6 +103,8 @@ class BookingOut(BaseModel):
     preferred_time: str
     notes:          Optional[str]
     status:         BookingStatus
+    consent_agreed: bool
+    consent_at:     Optional[datetime]
     created_at:     datetime
 
     model_config = {"from_attributes": True}
