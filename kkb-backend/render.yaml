@@ -1,0 +1,47 @@
+# Render Blueprint for the KKB backend (FastAPI).
+# In Render: New → Blueprint → connect this repo. Render reads this file.
+# Secrets (sync: false) are entered in the Render dashboard, never in git.
+
+services:
+  - type: web
+    name: kkb-backend
+    runtime: python
+    plan: free
+    rootDir: kkb-backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /health
+    envVars:
+      - key: PYTHON_VERSION
+        value: "3.11.9"
+      - key: APP_ENV
+        value: production
+      # Cross-site cookie settings (frontend on a different domain)
+      - key: COOKIE_SECURE
+        value: "true"
+      - key: COOKIE_SAMESITE
+        value: none
+
+      # ── Secrets & per-environment values — set in the dashboard ──
+      - key: DATABASE_URL          # your Neon/Postgres connection string
+        sync: false
+      - key: JWT_SECRET            # python3 -c "import secrets; print(secrets.token_hex(32))"
+        sync: false
+      - key: ADMIN_PASSWORD_HASH   # bootstrap admin password hash
+        sync: false
+      - key: STRIPE_SECRET_KEY
+        sync: false
+      - key: STRIPE_PUBLISHABLE_KEY
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: SALON_EMAIL_FROM
+        sync: false
+      - key: SALON_NAME
+        value: "Kut, Kolor N B3yond"
+      - key: SALON_PHONE
+        sync: false
+      - key: ADMIN_RECOVERY_EMAIL
+        sync: false
+      - key: FRONTEND_URL          # your Vercel URL, e.g. https://kkb-salon.vercel.app
+        sync: false

@@ -156,15 +156,24 @@ def authenticate(db: Session, password: str) -> bool:
 def set_session_cookie(response: Response, token: str) -> None:
     """
     Set the JWT as an HttpOnly cookie.
-    secure=True requires HTTPS — set via COOKIE_SECURE env var for production.
+
+    Local dev (same origin): COOKIE_SECURE=false, COOKIE_SAMESITE=lax.
+    Production with the frontend and backend on DIFFERENT domains
+    (e.g. Vercel + Render): the cookie is cross-site, so it must be
+    COOKIE_SAMESITE=none, which browsers only allow with Secure=true
+    (HTTPS). We force Secure whenever SameSite=None to stay valid.
     """
-    secure = os.getenv("COOKIE_SECURE", "false").lower() == "true"
+    samesite = os.getenv("COOKIE_SAMESITE", "lax").lower()
+    secure   = os.getenv("COOKIE_SECURE", "false").lower() == "true"
+    if samesite == "none":
+        secure = True  # required by browsers for SameSite=None cookies
+
     response.set_cookie(
         key=COOKIE_NAME,
         value=token,
         httponly=True,
         secure=secure,
-        samesite="lax",
+        samesite=samesite,
         max_age=TOKEN_EXPIRY_MINUTES * 60,
         path="/",
     )
