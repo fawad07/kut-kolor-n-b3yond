@@ -1,0 +1,46 @@
+/* Tailwind for the incremental migration.
+   Base/preflight is disabled in tailwind.config.js so this does not
+   disturb the existing hand-written CSS in styles.js / admin.css. */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Buttons (migrated from styles.js) ────────────────────
+   Repeated across the site, so defined once here with @apply.
+   Markup keeps the same class names (btn-primary, etc.). */
+@layer components {
+  .btn-primary {
+    @apply bg-ink text-cream border border-ink px-10 py-3.5 font-sans
+           text-[11px] font-medium tracking-[2.5px] uppercase
+           cursor-pointer transition-all inline-block;
+  }
+  .btn-primary:hover { @apply bg-accent border-accent; }
+
+  .btn-outline {
+    @apply bg-transparent text-ink border border-ink px-10 py-3.5 font-sans
+           text-[11px] font-medium tracking-[2.5px] uppercase
+           cursor-pointer transition-all;
+  }
+  .btn-outline:hover { @apply bg-ink text-cream; }
+
+  .btn-ghost {
+    @apply bg-transparent text-accent border-0 p-0 font-sans
+           text-[11px] font-medium tracking-[2.5px] uppercase
+           cursor-pointer transition-colors inline-flex items-center gap-2.5;
+  }
+  .btn-ghost:hover { @apply text-accentD; }
+
+  .btn-light {
+    @apply bg-cream text-ink border border-line2 px-10 py-3.5 font-sans
+           text-[11px] font-medium tracking-[2.5px] uppercase
+           cursor-pointer transition-all w-full;
+  }
+  .btn-light:hover { @apply bg-blush2 border-accent; }
+
+  .btn-cream-cta {
+    @apply bg-cream text-ink border border-cream px-12 py-3.5 font-sans
+           text-[11px] font-medium tracking-[2.5px] uppercase
+           cursor-pointer transition-all;
+  }
+  .btn-cream-cta:hover { @apply bg-transparent text-cream; }
+}

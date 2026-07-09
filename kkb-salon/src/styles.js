@@ -21,120 +21,11 @@ const styles = `
   }
 
   /* ── NAV ── */
-  .nav {
-    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    height: 72px;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 0 56px;
-    background: ${T.cream};
-    border-bottom: 1px solid ${T.border};
-  }
-
-  .nav-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 20px; font-weight: 500;
-    letter-spacing: 1px; color: ${T.black};
-    cursor: pointer; user-select: none;
-  }
-
-  .nav-logo em { font-style: italic; color: ${T.accent}; }
-
-  .nav-links { display: flex; align-items: center; gap: 36px; list-style: none; }
-
-  .nav-links li {
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    color: ${T.warm}; cursor: pointer; transition: color 0.2s;
-  }
-
-  .nav-links li:hover { color: ${T.black}; }
-  .nav-links li.active { color: ${T.black}; }
-
-  .nav-book-btn {
-    background: transparent; color: ${T.black};
-    border: 1px solid ${T.black}; padding: 10px 28px;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.25s;
-  }
-
-  .nav-book-btn:hover { background: ${T.black}; color: ${T.cream}; }
-
-  .nav-hamburger {
-    display: none; flex-direction: column; gap: 5px;
-    cursor: pointer; padding: 4px; background: none; border: none;
-  }
-
-  .nav-hamburger span { width: 22px; height: 1px; background: ${T.black}; display: block; }
-
-  /* ── MOBILE MENU ── */
-  .mobile-menu {
-    position: fixed; inset: 0; z-index: 99;
-    background: ${T.cream};
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 12px; opacity: 0; pointer-events: none; transition: opacity 0.3s;
-  }
-
-  .mobile-menu.open { opacity: 1; pointer-events: all; }
-
-  .mobile-menu li {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 40px; font-weight: 400; font-style: italic;
-    color: ${T.black}; list-style: none; cursor: pointer;
-    transition: color 0.2s; line-height: 1.3;
-  }
-
-  .mobile-menu li:hover { color: ${T.accent}; }
+  /* Nav, mobile menu & buttons migrated to Tailwind (Nav component + index.css) */
 
   .page { padding-top: 72px; min-height: 100vh; }
 
-  /* ── BUTTONS ── */
-  .btn-primary {
-    background: ${T.black}; color: ${T.cream};
-    border: 1px solid ${T.black}; padding: 14px 40px;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.25s; display: inline-block;
-  }
-
-  .btn-primary:hover { background: ${T.accent}; border-color: ${T.accent}; }
-
-  .btn-outline {
-    background: transparent; color: ${T.black};
-    border: 1px solid ${T.black}; padding: 14px 40px;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.25s;
-  }
-
-  .btn-outline:hover { background: ${T.black}; color: ${T.cream}; }
-
-  .btn-ghost {
-    background: transparent; color: ${T.accent};
-    border: none; padding: 0;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    cursor: pointer; transition: color 0.2s;
-    display: inline-flex; align-items: center; gap: 10px;
-  }
-
-  .btn-ghost:hover { color: ${T.accentD}; }
-
-  .btn-light {
-    background: ${T.cream}; color: ${T.black};
-    border: 1px solid ${T.border2}; padding: 14px 40px;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.25s; width: 100%;
-  }
-
-  .btn-light:hover { background: ${T.blush2}; border-color: ${T.accent}; }
+  /* ── BUTTONS — migrated to Tailwind @layer components (index.css) ── */
 
   /* ── SECTION LABEL ── */
   .eyebrow {
@@ -576,16 +467,7 @@ const styles = `
     max-width: 440px; line-height: 1.8;
   }
 
-  .btn-cream-cta {
-    background: ${T.cream}; color: ${T.black};
-    border: 1px solid ${T.cream}; padding: 14px 48px;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px; font-weight: 500;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    cursor: pointer; transition: all 0.25s;
-  }
-
-  .btn-cream-cta:hover { background: transparent; color: ${T.cream}; }
+  /* .btn-cream-cta migrated to Tailwind @layer components (index.css) */
 
   /* ── PAGE HERO ── */
   .page-hero {
@@ -998,43 +880,7 @@ const styles = `
   }
 
   /* ── FOOTER ── */
-  footer { background: ${T.dark}; padding: 72px 56px 40px; }
-
-  .footer-top {
-    display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
-    gap: 60px; padding-bottom: 56px;
-    border-bottom: 1px solid rgba(253,250,247,0.06);
-    margin-bottom: 36px;
-  }
-
-  .footer-logo {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px; font-weight: 400; font-style: italic;
-    color: ${T.cream}; margin-bottom: 16px;
-  }
-
-  .footer-logo em { color: ${T.blush2}; font-style: normal; }
-  .footer-tagline { font-size: 13px; font-weight: 300; color: rgba(253,250,247,0.35); line-height: 1.7; max-width: 240px; }
-
-  .footer-col-title {
-    font-size: 10px; font-weight: 500; letter-spacing: 2.5px;
-    text-transform: uppercase; color: rgba(253,250,247,0.3); margin-bottom: 20px;
-  }
-
-  .footer-links { list-style: none; display: grid; gap: 12px; }
-
-  .footer-links li {
-    font-size: 13px; font-weight: 300;
-    color: rgba(253,250,247,0.45); cursor: pointer; transition: color 0.2s;
-  }
-
-  .footer-links li:hover { color: ${T.cream}; }
-
-  .footer-bottom {
-    display: flex; justify-content: space-between; align-items: center;
-    font-size: 11px; color: rgba(253,250,247,0.2);
-    flex-wrap: wrap; gap: 12px; letter-spacing: 0.5px;
-  }
+  /* Footer migrated to Tailwind (Footer component) */
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
@@ -1042,14 +888,9 @@ const styles = `
     .hero-right { display: none; }
     .services-grid { grid-template-columns: 1fr; }
     .stylists-grid { grid-template-columns: repeat(2, 1fr); }
-    .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
   }
 
   @media (max-width: 768px) {
-    .nav { padding: 0 24px; }
-    .nav-links, .nav-book-btn { display: none; }
-    .nav-hamburger { display: flex; }
-    .mobile-menu { padding: 0 32px; }
     .hero-left { padding: 64px 24px; }
     .intro-band { padding: 48px 24px; flex-direction: column; }
     .intro-band-stats { gap: 32px; }
@@ -1083,8 +924,6 @@ const styles = `
     .contact-layout { grid-template-columns: 1fr; }
     .contact-left { padding: 40px 24px; }
     .contact-right { min-height: 200px; }
-    .footer-top { grid-template-columns: 1fr; }
-    footer { padding: 48px 24px 32px; }
     .time-slots { grid-template-columns: repeat(3, 1fr); }
   }
 

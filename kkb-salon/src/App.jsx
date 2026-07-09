@@ -57,23 +57,26 @@ const TIME_SLOTS = ["9:00 AM","9:30 AM","10:00 AM","10:30 AM","11:00 AM","11:30 
 function Nav({ current, navigate, menuOpen, setMenuOpen }) {
   return (
     <>
-      <nav className="nav">
-        <div className="nav-logo" onClick={() => navigate("Home")}>
-          Kut, Kolor <em>N B3yond</em>
+      <nav className="fixed top-0 left-0 right-0 z-[100] h-[72px] flex items-center justify-between px-6 md:px-14 bg-cream border-b border-line">
+        <div className="font-serif text-[20px] font-medium tracking-[1px] text-ink cursor-pointer select-none" onClick={() => navigate("Home")}>
+          Kut, Kolor <em className="italic text-accent">N B3yond</em>
         </div>
-        <ul className="nav-links">
+        <ul className="hidden md:flex items-center gap-9 list-none">
           {NAV_ITEMS.map(p => (
-            <li key={p} className={current === p ? "active" : ""} onClick={() => navigate(p)}>{p}</li>
+            <li key={p}
+              className={`text-[11px] font-medium tracking-[2.5px] uppercase cursor-pointer transition-colors ${current === p ? "text-ink" : "text-warm hover:text-ink"}`}
+              onClick={() => navigate(p)}>{p}</li>
           ))}
         </ul>
-        <button className="nav-book-btn" onClick={() => navigate("Booking")}>Book Now</button>
-        <button className="nav-hamburger" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
-          <span /><span /><span />
+        <button className="hidden md:inline-block bg-transparent text-ink border border-ink px-7 py-2.5 font-sans text-[11px] font-medium tracking-[2.5px] uppercase cursor-pointer transition-all hover:bg-ink hover:text-cream" onClick={() => navigate("Booking")}>Book Now</button>
+        <button className="flex md:hidden flex-col gap-[5px] cursor-pointer p-1 bg-transparent border-0" onClick={() => setMenuOpen(!menuOpen)} aria-label="Menu">
+          <span className="block w-[22px] h-px bg-ink" /><span className="block w-[22px] h-px bg-ink" /><span className="block w-[22px] h-px bg-ink" />
         </button>
       </nav>
-      <ul className={`mobile-menu ${menuOpen ? "open" : ""}`}>
+      <ul className={`fixed inset-0 z-[99] bg-cream flex flex-col items-center justify-center gap-3 px-8 transition-opacity md:hidden ${menuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"}`}>
         {NAV_ITEMS.map(p => (
-          <li key={p} onClick={() => { navigate(p); setMenuOpen(false); }}>{p}</li>
+          <li key={p} className="font-serif text-[40px] font-normal italic text-ink list-none cursor-pointer transition-colors leading-[1.3] hover:text-accent"
+            onClick={() => { navigate(p); setMenuOpen(false); }}>{p}</li>
         ))}
       </ul>
     </>
@@ -82,43 +85,43 @@ function Nav({ current, navigate, menuOpen, setMenuOpen }) {
 
 function Footer({ navigate }) {
   return (
-    <footer>
-      <div className="footer-top">
+    <footer className="bg-dark px-6 pt-12 pb-8 md:px-14 md:pt-[72px] md:pb-10">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[2fr_1fr_1fr_1fr] gap-10 lg:gap-[60px] pb-14 border-b border-white/[0.06] mb-9">
         <div>
-          <div className="footer-logo">Kut, Kolor <em>N B3yond</em></div>
-          <p className="footer-tagline">Your transformation starts here. Premium hair services for every age, every style, every story.</p>
+          <div className="font-serif text-[22px] font-normal italic text-cream mb-4">Kut, Kolor <em className="not-italic text-blush2">N B3yond</em></div>
+          <p className="text-[13px] font-light text-cream/35 leading-[1.7] max-w-[240px]">Your transformation starts here. Premium hair services for every age, every style, every story.</p>
         </div>
         <div>
-          <div className="footer-col-title">Services</div>
-          <ul className="footer-links">
+          <div className="text-[10px] font-medium tracking-[2.5px] uppercase text-cream/30 mb-5">Services</div>
+          <ul className="list-none grid gap-3">
             {["Cuts","Color","Treatments","Packages"].map(s => (
-              <li key={s} onClick={() => navigate("Services")}>{s}</li>
+              <li key={s} className="text-[13px] font-light text-cream/45 cursor-pointer transition-colors hover:text-cream" onClick={() => navigate("Services")}>{s}</li>
             ))}
           </ul>
         </div>
         <div>
-          <div className="footer-col-title">Salon</div>
-          <ul className="footer-links">
+          <div className="text-[10px] font-medium tracking-[2.5px] uppercase text-cream/30 mb-5">Salon</div>
+          <ul className="list-none grid gap-3">
             {[["Stylists","Stylists"],["Gallery","Gallery"],["About","About"],["Contact","Contact"]].map(([label,page]) => (
-              <li key={label} onClick={() => navigate(page)}>{label}</li>
+              <li key={label} className="text-[13px] font-light text-cream/45 cursor-pointer transition-colors hover:text-cream" onClick={() => navigate(page)}>{label}</li>
             ))}
           </ul>
         </div>
         <div>
-          <div className="footer-col-title">Hours</div>
-          <ul className="footer-links">
+          <div className="text-[10px] font-medium tracking-[2.5px] uppercase text-cream/30 mb-5">Hours</div>
+          <ul className="list-none grid gap-3 text-[13px] font-light text-cream/45">
             <li>Mon – Fri: 9am – 7pm</li>
             <li>Saturday: 9am – 6pm</li>
             <li>Sunday: 10am – 4pm</li>
           </ul>
         </div>
       </div>
-      <div className="footer-bottom">
+      <div className="flex justify-between items-center flex-wrap gap-3 text-[11px] tracking-[0.5px] text-cream/20">
         <span>© 2026 Kut, Kolor N B3yond</span>
         <span>
-          <span onClick={() => navigate("Privacy")} style={{ cursor: "pointer" }}>Privacy</span>
+          <span onClick={() => navigate("Privacy")} className="cursor-pointer hover:text-cream/50">Privacy</span>
           {" · "}
-          <span onClick={() => navigate("Terms")} style={{ cursor: "pointer" }}>Terms</span>
+          <span onClick={() => navigate("Terms")} className="cursor-pointer hover:text-cream/50">Terms</span>
         </span>
       </div>
     </footer>
@@ -636,11 +639,7 @@ function ServicesPage({ navigate }) {
             </div>
           </div>
         ))}
-        <p style={{
-          textAlign: "center", fontSize: "14px", fontStyle: "italic",
-          color: T.warm, marginTop: "40px", lineHeight: 1.7,
-          fontFamily: "'Cormorant Garamond', serif",
-        }}>
+        <p className="text-center text-[14px] italic text-warm mt-10 leading-[1.7] font-serif">
           * Prices are a starting guide and may change depending on hair length,
           thickness, and condition. Your final price is always confirmed at your
           complimentary consultation.
