@@ -32,140 +32,7 @@ const styles = `
 
   .body-text { font-size: 15px; font-weight: 300; color: ${T.warm}; line-height: 1.8; }
 
-  /* ── HOME HERO ── */
-  .hero {
-    min-height: calc(100vh - 72px);
-    position: relative;
-    overflow: hidden;
-    display: flex; align-items: center;
-  }
-
-  .hero-image {
-    position: absolute; inset: 0;
-    z-index: 0;
-  }
-
-  .hero-image img {
-    width: 100%; height: 100%;
-    object-fit: cover; object-position: center top;
-    display: block;
-  }
-
-  .hero-image::after {
-    content: '';
-    position: absolute; inset: 0;
-    background: linear-gradient(
-      105deg,
-      rgba(26,10,14,0.82) 0%,
-      rgba(26,10,14,0.65) 50%,
-      rgba(26,10,14,0.30) 100%
-    );
-  }
-
-  .hero-left {
-    position: relative; z-index: 1;
-    padding: 100px 56px;
-    display: flex; flex-direction: column;
-    justify-content: center; gap: 32px;
-    max-width: 680px;
-    width: 100%;
-  }
-
-  .hero-right { display: none; }
-
-  .hero-right-watermark {
-    position: absolute;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(160px, 22vw, 280px);
-    font-weight: 300; font-style: italic;
-    color: rgba(196,116,138,0.07);
-    line-height: 1; user-select: none;
-    right: -30px; bottom: -40px; letter-spacing: -8px;
-  }
-
-  .hero-right-inner {
-    position: relative; z-index: 1; width: 100%;
-  }
-
-  .hero-quote {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(28px, 3.5vw, 44px);
-    font-weight: 400; font-style: italic;
-    color: ${T.dark}; line-height: 1.35;
-    margin-bottom: 40px;
-  }
-
-  .hero-quote-attr {
-    font-size: 11px; letter-spacing: 2px;
-    text-transform: uppercase; color: ${T.muted};
-  }
-
-  .hero-divider {
-    width: 40px; height: 1px;
-    background: ${T.accent}; margin: 40px 0;
-  }
-
-  .hero-highlights { display: flex; flex-direction: column; gap: 20px; }
-
-  .hero-highlight-item {
-    display: flex; align-items: center; gap: 16px;
-    font-size: 13px; color: ${T.warm}; letter-spacing: 0.5px;
-  }
-
-  .hero-highlight-dot {
-    width: 6px; height: 6px; border-radius: 50%;
-    background: ${T.accent}; flex-shrink: 0;
-  }
-
-  .hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(56px, 8vw, 100px);
-    font-weight: 400; line-height: 0.95;
-    color: ${T.cream}; letter-spacing: -2px;
-    margin-bottom: 32px;
-  }
-
-  .hero-title em { font-style: italic; color: ${T.blush2}; }
-
-  .hero-sub {
-    font-size: 15px; font-weight: 300;
-    color: rgba(253,250,247,0.7); max-width: 420px;
-    line-height: 1.8; margin-bottom: 40px;
-  }
-
-  /* ── INTRO BAND ── */
-  .intro-band {
-    background: ${T.blush};
-    padding: 64px 56px;
-    border-top: 1px solid ${T.border};
-    border-bottom: 1px solid ${T.border};
-    display: flex; align-items: center;
-    justify-content: space-between; gap: 48px; flex-wrap: wrap;
-  }
-
-  .intro-band-text {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(22px, 2.5vw, 32px);
-    font-weight: 400; font-style: italic;
-    color: ${T.dark}; line-height: 1.4; max-width: 560px;
-  }
-
-  .intro-band-stats {
-    display: flex; gap: 48px; flex-shrink: 0;
-  }
-
-  .intro-stat { text-align: center; }
-
-  .intro-stat-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px; font-weight: 400; font-style: italic;
-    color: ${T.accent}; line-height: 1;
-  }
-
-  .intro-stat-label {
-    font-size: 10px; letter-spacing: 2px;
-    text-transform: uppercase; color: ${T.muted}; margin-top: 4px;
-  }
+  /* ── HOME HERO + INTRO BAND — redesigned in Tailwind (HomePage) ── */
 
   /* ── SERVICES SECTION ── */
   .services-section { padding: 100px 56px; background: ${T.cream}; }
@@ -871,16 +738,11 @@ const styles = `
 
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
-    .hero { grid-template-columns: 1fr; }
-    .hero-right { display: none; }
     .services-grid { grid-template-columns: 1fr; }
     .stylists-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 768px) {
-    .hero-left { padding: 64px 24px; }
-    .intro-band { padding: 48px 24px; flex-direction: column; }
-    .intro-band-stats { gap: 32px; }
     .services-section { padding: 64px 24px; }
     .service-card { min-width: 85%; }
     .about-section { grid-template-columns: 1fr; }

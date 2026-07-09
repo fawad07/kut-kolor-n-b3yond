@@ -503,45 +503,56 @@ function ServicesCarousel({ navigate }) {
 function HomePage({ navigate }) {
   return (
     <div className="page">
-      <div className="hero">
-        {/* Full-bleed background image — swap src="/hero.jpg" when you have your own photo */}
-        <div className="hero-image">
+      {/* ── HERO ── */}
+      <section className="relative flex items-center overflow-hidden min-h-[calc(100vh-72px)]">
+        {/* Full-bleed background image — swap src when you have your own photo */}
+        <div className="absolute inset-0 z-0">
           <img
+            className="w-full h-full object-cover object-[center_top]"
             src="https://images.unsplash.com/photo-1560066984-138dadb4c035?w=1400&q=85"
             alt="Inside Kut, Kolor N B3yond salon"
           />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a0a0e]/90 via-[#1a0a0e]/70 to-[#1a0a0e]/25" />
         </div>
 
-        <div className="hero-left">
-          <div className="eyebrow" style={{color:T.blush2}}>Premium Hair Studio — Est. 2024</div>
-          <h1 className="hero-title">Kut,<br />Kolor<br /><em>N B3yond</em></h1>
+        <div className="relative z-[1] w-full max-w-[680px] flex flex-col gap-8 px-6 md:px-14 py-24 md:py-[120px]">
+          <div className="flex items-center gap-4">
+            <span className="w-10 h-px bg-blush2/60" />
+            <span className="text-[11px] font-normal tracking-[3px] uppercase text-blush2">Premium Hair Studio — Est. 2024</span>
+          </div>
+          <h1 className="font-serif font-normal text-cream text-[clamp(56px,8vw,104px)] leading-[0.92] tracking-[-2px]">
+            Kut,<br />Kolor<br /><em className="italic text-blush2">N B3yond</em>
+          </h1>
           <div>
-            <p className="hero-sub">Precision cuts, transformative color, and treatments that go beyond the chair. For every age, every texture, every vision.</p>
-            <div style={{display:"flex",gap:"16px",alignItems:"center",marginTop:"36px",flexWrap:"wrap"}}>
+            <p className="text-[15px] font-light text-cream/70 max-w-[440px] leading-[1.85] mb-9">
+              Precision cuts, transformative color, and treatments that go beyond the chair. For every age, every texture, every vision.
+            </p>
+            <div className="flex flex-wrap items-center gap-4">
               <button className="btn-primary" onClick={() => navigate("Booking")}>Book an Appointment</button>
-              <button
-                className="btn-ghost"
-                style={{color:T.cream, borderColor:"rgba(253,250,247,0.4)"}}
-                onClick={() => navigate("Services")}
-              >
-                View Services →
-              </button>
+              <button className="btn-ghost text-cream hover:text-cream/70" onClick={() => navigate("Services")}>View Services →</button>
             </div>
           </div>
         </div>
-      </div>
 
-      <div className="intro-band">
-        <p className="intro-band-text">"More than a salon — a place where every client leaves feeling seen, cared for, and beautifully themselves."</p>
-        <div className="intro-band-stats">
+        <div className="absolute bottom-8 left-6 md:left-14 z-[1] hidden sm:flex items-center gap-3 text-cream/50 text-[10px] tracking-[2px] uppercase">
+          <span className="w-8 h-px bg-cream/40" /> Scroll
+        </div>
+      </section>
+
+      {/* ── INTRO BAND ── */}
+      <section className="bg-blush border-y border-line px-6 md:px-14 py-14 md:py-20 flex flex-col lg:flex-row items-center justify-between gap-10 lg:gap-12">
+        <p className="font-serif italic text-dark text-[clamp(22px,2.5vw,32px)] leading-[1.4] max-w-[560px]">
+          &ldquo;More than a salon — a place where every client leaves feeling seen, cared for, and beautifully themselves.&rdquo;
+        </p>
+        <div className="flex shrink-0 divide-x divide-line2">
           {[{n:"12+",l:"Years of craft"},{n:"1",l:"Expert stylist"},{n:"500+",l:"Happy clients"}].map(s => (
-            <div className="intro-stat" key={s.l}>
-              <div className="intro-stat-num">{s.n}</div>
-              <div className="intro-stat-label">{s.l}</div>
+            <div className="text-center px-6 md:px-8 first:pl-0 last:pr-0" key={s.l}>
+              <div className="font-serif italic text-accent text-[44px] leading-none">{s.n}</div>
+              <div className="text-[10px] tracking-[2px] uppercase text-muted mt-2">{s.l}</div>
             </div>
           ))}
         </div>
-      </div>
+      </section>
 
       <div className="services-section">
         <div className="services-header">
