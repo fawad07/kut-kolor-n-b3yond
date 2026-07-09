@@ -554,8 +554,9 @@ function HomePage({ navigate }) {
         </div>
       </section>
 
-      <div className="services-section">
-        <div className="services-header">
+      {/* ── SERVICES ── */}
+      <section className="bg-cream px-6 md:px-14 py-20 md:py-[100px]">
+        <div className="flex flex-wrap items-end justify-between gap-6 mb-12">
           <div>
             <div className="eyebrow">What we offer</div>
             <h2 className="display-title">Services for<br /><em>every look</em></h2>
@@ -563,57 +564,63 @@ function HomePage({ navigate }) {
           <button className="btn-ghost" onClick={() => navigate("Services")}>Full menu →</button>
         </div>
         <ServicesCarousel navigate={navigate} />
-      </div>
+      </section>
 
-      <div className="about-section">
-        <div className="about-image-side">
-          <div className="about-image-text">✂</div>
-          ✂️
+      {/* ── ABOUT ── */}
+      <section className="grid grid-cols-1 md:grid-cols-2 border-y border-line min-h-[520px]">
+        <div className="hidden md:flex relative overflow-hidden items-center justify-center bg-blush2 border-r border-line min-h-[400px]">
+          <span className="font-serif italic leading-none text-[200px] text-accent/10 select-none">✂</span>
+          <span className="absolute bottom-8 left-8 text-[11px] tracking-[3px] uppercase text-dark/50">The KKB Studio</span>
         </div>
-        <div className="about-content">
+        <div className="flex flex-col justify-center bg-cream px-6 md:px-14 py-16 md:py-20">
           <div className="eyebrow">Our story</div>
           <h2 className="display-title">More than<br /><em>just hair.</em></h2>
-          <div className="about-body">
+          <div className="text-[15px] font-light text-warm leading-[1.85] mt-6 mb-10 space-y-4">
             <p>Kut, Kolor N B3yond was built on one belief: every person deserves to walk out of a salon feeling like the best version of themselves — regardless of age, texture, or budget.</p>
             <p>From the grandmother celebrating her birthday to the teenager finding her style, we're here for everyone. Our team of specialists brings decades of experience and genuine passion to every chair.</p>
           </div>
-          <button className="btn-outline" onClick={() => navigate("About")}>Our Story</button>
+          <div><button className="btn-outline" onClick={() => navigate("About")}>Our Story</button></div>
         </div>
-      </div>
+      </section>
 
-      <div className="packages-section-home">
+      {/* ── PACKAGES ── */}
+      <section className="bg-blush border-b border-line px-6 md:px-14 py-20 md:py-[100px]">
         <div className="eyebrow">Save more</div>
-        <h2 className="display-title">Our <em>Packages</em></h2>
-        <div className="packages-grid-home">
-          {PACKAGES.map(pkg => (
-            <div className={`package-card-home ${pkg.featured ? "featured" : ""}`} key={pkg.name}>
-              <span className={`pkg-tag ${pkg.featured ? "pkg-tag-light" : ""}`}>{pkg.featured ? "Most Requested" : "Package"}</span>
-              <div className={`pkg-name ${pkg.featured ? "pkg-name-light" : ""}`}>{pkg.name}</div>
-              <div className={`pkg-tagline ${pkg.featured ? "pkg-tagline-light" : ""}`}>{pkg.tagline}</div>
-              <ul className={`pkg-includes ${pkg.featured ? "pkg-includes-light" : ""}`}>
-                {pkg.includes.map(i => <li key={i}>{i}</li>)}
-              </ul>
-              <div className={`pkg-price ${pkg.featured ? "pkg-price-light" : ""}`}>{pkg.price}</div>
-              <div className="pkg-original">{pkg.original}</div>
-              <div className="pkg-save">{pkg.save}</div>
-              <button
-                className={pkg.featured ? "btn-cream-cta" : "btn-outline"}
-                style={{marginTop:"20px", width:"100%", padding:"13px 20px"}}
-                onClick={() => navigate("Booking")}
-              >
-                Book This Package
-              </button>
-            </div>
-          ))}
+        <h2 className="display-title mb-12">Our <em>Packages</em></h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
+          {PACKAGES.map(pkg => {
+            const light = pkg.featured;
+            return (
+              <div key={pkg.name}
+                className={`px-9 py-12 cursor-pointer transition-colors ${light ? "bg-dark hover:bg-[#4a3840]" : "bg-blush hover:bg-blush2"}`}
+                onClick={() => navigate("Booking")}>
+                <span className={`block text-[10px] tracking-[2.5px] uppercase mb-5 ${light ? "text-blush" : "text-accent"}`}>{light ? "Most Requested" : "Package"}</span>
+                <div className={`font-serif text-[32px] leading-[1.1] mb-1.5 ${light ? "text-cream" : "text-ink"}`}>{pkg.name}</div>
+                <div className={`text-[13px] font-light italic mb-7 ${light ? "text-cream/50" : "text-muted"}`}>{pkg.tagline}</div>
+                <ul className="grid gap-2.5 mb-8">
+                  {pkg.includes.map(i => (
+                    <li key={i} className={`flex items-start gap-3 text-[13px] font-light leading-[1.4] ${light ? "text-cream/60" : "text-warm"}`}>
+                      <span className="text-accent shrink-0">—</span>{i}
+                    </li>
+                  ))}
+                </ul>
+                <div className={`font-serif italic text-[52px] leading-none mb-1 ${light ? "text-cream" : "text-ink"}`}>{pkg.price}</div>
+                <div className="text-[14px] text-muted line-through mb-1">{pkg.original}</div>
+                <div className="text-[11px] tracking-[1.5px] uppercase text-accent mb-7">{pkg.save}</div>
+                <button className={`${light ? "btn-cream-cta" : "btn-outline"} w-full mt-1`} onClick={() => navigate("Booking")}>Book This Package</button>
+              </div>
+            );
+          })}
         </div>
-      </div>
+      </section>
 
-      <div className="cta-section">
-        <div className="eyebrow" style={{color:"rgba(253,250,247,0.4)"}}>Ready to begin</div>
-        <h2 className="cta-title">Your best hair<br />is <em>waiting</em> for you.</h2>
-        <p className="cta-sub">Book online in minutes. Choose your stylist, pick your time, and we'll take care of the rest.</p>
+      {/* ── CTA ── */}
+      <section className="bg-dark px-6 md:px-14 py-20 md:py-[100px] text-center flex flex-col items-center gap-8">
+        <div className="text-[11px] font-normal tracking-[3px] uppercase text-cream/40">Ready to begin</div>
+        <h2 className="font-serif italic text-cream text-[clamp(36px,5vw,64px)] leading-[1.15]">Your best hair<br />is <em className="not-italic text-blush2">waiting</em> for you.</h2>
+        <p className="text-[14px] font-light text-cream/50 max-w-[440px] leading-[1.8]">Book online in minutes. Choose your stylist, pick your time, and we'll take care of the rest.</p>
         <button className="btn-cream-cta" onClick={() => navigate("Booking")}>Book an Appointment</button>
-      </div>
+      </section>
 
       <Footer navigate={navigate} />
     </div>

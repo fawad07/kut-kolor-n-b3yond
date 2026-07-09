@@ -34,13 +34,8 @@ const styles = `
 
   /* ── HOME HERO + INTRO BAND — redesigned in Tailwind (HomePage) ── */
 
-  /* ── SERVICES SECTION ── */
-  .services-section { padding: 100px 56px; background: ${T.cream}; }
-
-  .services-header {
-    display: flex; justify-content: space-between;
-    align-items: flex-end; margin-bottom: 48px; flex-wrap: wrap; gap: 24px;
-  }
+  /* ── SERVICES SECTION — section wrapper redesigned in Tailwind (HomePage);
+        carousel internals below remain in CSS ── */
 
   /* ── Carousel ── */
   .carousel-wrapper { position: relative; }
@@ -195,63 +190,8 @@ const styles = `
     to   { transform: scaleX(1); }
   }
 
-  /* ── ABOUT SECTION ── */
-  .about-section {
-    display: grid; grid-template-columns: 1fr 1fr;
-    border-top: 1px solid ${T.border};
-    border-bottom: 1px solid ${T.border};
-    min-height: 520px;
-  }
-
-  .about-image-side {
-    background: ${T.blush2};
-    display: flex; align-items: center; justify-content: center;
-    font-size: 80px; position: relative; overflow: hidden;
-    border-right: 1px solid ${T.border};
-    min-height: 400px;
-  }
-
-  .about-image-text {
-    position: absolute;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 160px; font-weight: 300; font-style: italic;
-    color: rgba(196,116,138,0.08); bottom: -20px; right: -10px;
-    line-height: 1; user-select: none;
-  }
-
-  .about-content {
-    padding: 80px 56px;
-    display: flex; flex-direction: column; justify-content: center;
-    background: ${T.cream};
-  }
-
-  .about-body {
-    font-size: 15px; font-weight: 300; color: ${T.warm};
-    line-height: 1.85; margin: 24px 0 40px;
-  }
-
-  .about-body p { margin-bottom: 16px; }
-
-  /* ── PACKAGES SECTION ── */
-  .packages-section-home {
-    padding: 100px 56px; background: ${T.blush};
-    border-bottom: 1px solid ${T.border};
-  }
-
-  .packages-grid-home {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: ${T.border};
-    border: 1px solid ${T.border}; margin-top: 56px;
-  }
-
-  .package-card-home {
-    padding: 48px 36px; background: ${T.blush};
-    transition: background 0.3s; cursor: pointer;
-  }
-
-  .package-card-home:hover { background: ${T.blush2}; }
-  .package-card-home.featured { background: ${T.dark}; }
-  .package-card-home.featured:hover { background: #4a3840; }
+  /* ── HOME ABOUT + PACKAGES SECTIONS — redesigned in Tailwind (HomePage) ──
+        pkg-* below are shared with the Packages page and stay for now. */
 
   .pkg-tag {
     font-size: 10px; letter-spacing: 2.5px;
@@ -298,30 +238,7 @@ const styles = `
   .pkg-original { font-size: 14px; color: ${T.muted}; text-decoration: line-through; margin-bottom: 4px; }
   .pkg-save { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: ${T.accent}; margin-bottom: 28px; }
 
-  /* ── CTA SECTION ── */
-  .cta-section {
-    padding: 100px 56px;
-    background: ${T.dark};
-    text-align: center;
-    display: flex; flex-direction: column; align-items: center; gap: 32px;
-  }
-
-  .cta-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(36px, 5vw, 64px);
-    font-weight: 400; font-style: italic;
-    color: ${T.cream}; line-height: 1.15;
-  }
-
-  .cta-title em { color: ${T.blush2}; font-style: normal; }
-
-  .cta-sub {
-    font-size: 14px; font-weight: 300;
-    color: rgba(253,250,247,0.5);
-    max-width: 440px; line-height: 1.8;
-  }
-
-  /* .btn-cream-cta migrated to Tailwind @layer components (index.css) */
+  /* ── CTA SECTION — redesigned in Tailwind (HomePage) ── */
 
   /* ── PAGE HERO ── */
   .page-hero {
@@ -743,14 +660,7 @@ const styles = `
   }
 
   @media (max-width: 768px) {
-    .services-section { padding: 64px 24px; }
     .service-card { min-width: 85%; }
-    .about-section { grid-template-columns: 1fr; }
-    .about-image-side { display: none; }
-    .about-content { padding: 56px 24px; }
-    .packages-section-home { padding: 64px 24px; }
-    .packages-grid-home { grid-template-columns: 1fr; }
-    .cta-section { padding: 72px 24px; }
     .page-hero { padding: 56px 24px 40px; }
     .page-hero-inner { grid-template-columns: 1fr; gap: 32px; }
     .services-full { padding: 40px 24px; }
