@@ -436,36 +436,36 @@ function ServicesCarousel({ navigate }) {
 
   return (
     <div
-      className="carousel-wrapper"
+      className="relative"
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="carousel-track-outer">
+      <div className="overflow-hidden border border-line">
         <div
-          className="carousel-track"
+          className="flex will-change-transform transition-transform duration-[450ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
           style={{ transform: `translateX(calc(-${index * stepPct}% - ${index}px))` }}
         >
           {SERVICE_CARDS.map(s => (
             <div
-              className="service-card"
+              className="group flex flex-col flex-shrink-0 min-w-[85%] md:min-w-[calc(50%-0.5px)] bg-cream cursor-pointer border-r border-line last:border-r-0 transition-shadow hover:shadow-[inset_0_0_0_1px_#C4748A]"
               key={s.name}
               onClick={() => navigate(s.page)}
             >
               {/* Header bar */}
-              <div className="service-card-header">
-                <div className="service-card-header-left">
-                  <span className="service-card-num">{s.n}</span>
-                  <span className="service-card-name">{s.name}</span>
+              <div className="flex items-center justify-between px-9 py-5 bg-accent transition-colors group-hover:bg-accentD">
+                <div className="flex items-center gap-3.5">
+                  <span className="font-serif italic font-light text-[13px] tracking-[1px] text-cream/60">{s.n}</span>
+                  <span className="font-serif font-medium text-[26px] leading-none tracking-[-0.3px] text-cream">{s.name}</span>
                 </div>
-                <span className="service-card-header-arrow">→</span>
+                <span className="text-[18px] text-cream/50 transition-transform group-hover:translate-x-1 group-hover:text-cream">→</span>
               </div>
 
               {/* Body */}
-              <div className="service-card-body">
-                <p className="service-card-desc">{s.desc}</p>
-                <div className="service-card-footer">
-                  <div className="service-card-price">{s.price}</div>
-                  <div className="service-card-tag">{s.tag}</div>
+              <div className="flex flex-col flex-1 gap-6 px-9 pt-9 pb-10">
+                <p className="text-[14px] font-light text-warm leading-[1.75] flex-1">{s.desc}</p>
+                <div className="flex items-center justify-between pt-5 border-t border-line">
+                  <div className="text-[11px] font-medium tracking-[2px] uppercase text-accent">{s.price}</div>
+                  <div className="text-[11px] font-normal tracking-[1.5px] uppercase text-muted border border-line px-2.5 py-1">{s.tag}</div>
                 </div>
               </div>
             </div>
@@ -473,28 +473,28 @@ function ServicesCarousel({ navigate }) {
         </div>
       </div>
 
-      <div className="carousel-controls">
-        <button className="carousel-btn" onClick={prev} disabled={index === 0}>←</button>
-        <button className="carousel-btn" onClick={next} disabled={index === maxIndex}>→</button>
+      <div className="flex items-center gap-3 mt-7">
+        <button className="w-11 h-11 flex items-center justify-center flex-shrink-0 border border-line bg-cream text-[18px] text-warm cursor-pointer transition-all hover:border-accent hover:text-accent hover:bg-blush disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none" onClick={prev} disabled={index === 0}>←</button>
+        <button className="w-11 h-11 flex items-center justify-center flex-shrink-0 border border-line bg-cream text-[18px] text-warm cursor-pointer transition-all hover:border-accent hover:text-accent hover:bg-blush disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none" onClick={next} disabled={index === maxIndex}>→</button>
 
-        <div className="carousel-dots">
+        <div className="flex items-center gap-2">
           {Array.from({ length: maxIndex + 1 }).map((_, i) => (
             <div
               key={i}
-              className={`carousel-dot ${i === index ? "active" : ""}`}
+              className={`h-1.5 rounded-full cursor-pointer transition-all ${i === index ? "w-5 bg-accent rounded-[3px]" : "w-1.5 bg-line2"}`}
               onClick={() => { setPaused(true); setIndex(i); }}
             />
           ))}
         </div>
 
-        <div className="carousel-progress">
-          <em>{index + 1}</em> / {maxIndex + 1}
+        <div className="ml-auto font-serif italic text-[18px] text-muted">
+          <em className="not-italic text-ink">{index + 1}</em> / {maxIndex + 1}
         </div>
       </div>
 
       {/* Auto-play progress bar */}
-      <div className="carousel-progress-bar">
-        <div className={`carousel-progress-fill ${paused ? "paused" : ""}`} key={index} />
+      <div className="h-0.5 bg-line mt-5 overflow-hidden">
+        <div className={`h-full bg-accent origin-left animate-carousel-tick ${paused ? "[animation-play-state:paused]" : ""}`} key={index} />
       </div>
     </div>
   );

@@ -25,6 +25,15 @@ export default {
         serif: ["'Cormorant Garamond'", "serif"],
         sans:  ["'Jost'", "sans-serif"],
       },
+      keyframes: {
+        "carousel-tick": {
+          from: { transform: "scaleX(0)" },
+          to:   { transform: "scaleX(1)" },
+        },
+      },
+      animation: {
+        "carousel-tick": "carousel-tick 3s linear infinite",
+      },
     },
   },
   plugins: [],
