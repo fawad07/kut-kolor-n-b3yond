@@ -28,20 +28,7 @@ const styles = `
   /* ── BUTTONS — migrated to Tailwind @layer components (index.css) ── */
 
   /* ── SECTION LABEL ── */
-  .eyebrow {
-    font-size: 11px; font-weight: 400;
-    letter-spacing: 3px; text-transform: uppercase;
-    color: ${T.accent}; margin-bottom: 16px;
-  }
-
-  .display-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(40px, 5vw, 68px);
-    font-weight: 400; line-height: 1.05;
-    color: ${T.black}; letter-spacing: -0.5px;
-  }
-
-  .display-title em { font-style: italic; color: ${T.accent}; }
+  /* .eyebrow and .display-title migrated to Tailwind @layer components (index.css) */
 
   .body-text { font-size: 15px; font-weight: 300; color: ${T.warm}; line-height: 1.8; }
 
