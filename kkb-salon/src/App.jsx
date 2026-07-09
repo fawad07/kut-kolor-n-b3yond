@@ -636,22 +636,29 @@ function ServicesPage({ navigate }) {
           <p className="page-hero-sub">Every service performed by a trained specialist. Prices may vary based on hair length and complexity. Consultations are always complimentary.</p>
         </div>
       </div>
-      <div className="services-full">
+      <section className="bg-cream px-6 md:px-14 py-16">
         {SERVICES.map(cat => (
-          <div className="service-category" key={cat.category}>
-            <div className="category-header">
-              <div className="category-name">{cat.category}</div>
-              <div className="category-count">{cat.items.length} services</div>
+          <div className="mb-14" key={cat.category}>
+            <div className="flex items-baseline gap-5 mb-1">
+              <div className="font-serif italic text-[32px] text-ink">{cat.category}</div>
+              <div className="text-[12px] tracking-[1px] text-muted">{cat.items.length} services</div>
             </div>
-            <div className="category-line" />
+            <div className="h-px bg-line" />
             <div>
               {cat.items.map(item => (
-                <div className="service-row" key={item.name} onClick={() => navigate("Booking")}>
-                  <div className="service-row-left">
-                    <div className="service-row-name">{item.name}</div>
-                    <div className="service-row-duration">{item.duration}</div>
+                <div
+                  className="group flex items-center justify-between gap-4 py-[18px] border-b border-line first:border-t cursor-pointer transition-[padding] hover:pl-2"
+                  key={item.name}
+                  onClick={() => navigate("Booking")}
+                >
+                  <div className="flex items-center gap-7">
+                    <div className="text-[15px] text-ink transition-colors group-hover:text-accent">{item.name}</div>
+                    <div className="text-[12px] tracking-[0.5px] text-muted">{item.duration}</div>
                   </div>
-                  <div className="service-row-price">{item.price}</div>
+                  <div className="flex items-center gap-4">
+                    <span className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all text-accent">→</span>
+                    <div className="font-serif italic text-[22px] text-dark whitespace-nowrap">{item.price}</div>
+                  </div>
                 </div>
               ))}
             </div>
@@ -662,7 +669,7 @@ function ServicesPage({ navigate }) {
           thickness, and condition. Your final price is always confirmed at your
           complimentary consultation.
         </p>
-      </div>
+      </section>
       <Footer navigate={navigate} />
     </div>
   );

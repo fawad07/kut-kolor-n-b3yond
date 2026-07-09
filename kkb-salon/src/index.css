@@ -53,4 +53,19 @@
            text-ink tracking-[-0.5px];
   }
   .display-title em { @apply italic text-accent; }
+
+  /* ── Shared inner-page hero (Services, Packages, About, etc.) ── */
+  .page-hero {
+    @apply bg-cream border-b border-line px-6 md:px-14 pt-14 md:pt-20 pb-10 md:pb-[60px];
+  }
+  .page-hero-inner {
+    @apply grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-[60px] items-end;
+  }
+  .page-hero-title {
+    @apply font-serif text-[clamp(52px,7vw,88px)] font-normal text-ink leading-[0.95] tracking-[-1px];
+  }
+  .page-hero-title em { @apply italic text-accent; }
+  .page-hero-sub {
+    @apply text-[15px] font-light text-warm leading-[1.8] pt-5 border-t border-line;
+  }
 }

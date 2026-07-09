@@ -87,70 +87,8 @@ const styles = `
   /* ── CTA SECTION — redesigned in Tailwind (HomePage) ── */
 
   /* ── PAGE HERO ── */
-  .page-hero {
-    padding: 80px 56px 60px; background: ${T.cream};
-    border-bottom: 1px solid ${T.border};
-  }
-
-  .page-hero-inner {
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 60px; align-items: end;
-  }
-
-  .page-hero-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(52px, 7vw, 88px);
-    font-weight: 400; color: ${T.black};
-    line-height: 0.95; letter-spacing: -1px;
-  }
-
-  .page-hero-title em { font-style: italic; color: ${T.accent}; }
-
-  .page-hero-sub {
-    font-size: 15px; font-weight: 300; color: ${T.warm};
-    line-height: 1.8; padding-top: 20px;
-    border-top: 1px solid ${T.border};
-  }
-
-  /* ── SERVICES PAGE ── */
-  .services-full { padding: 64px 56px; background: ${T.cream}; }
-  .service-category { margin-bottom: 56px; }
-
-  .category-header {
-    display: flex; align-items: baseline; gap: 20px; margin-bottom: 4px;
-  }
-
-  .category-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px; font-weight: 400; font-style: italic;
-    color: ${T.black};
-  }
-
-  .category-count { font-size: 12px; color: ${T.muted}; letter-spacing: 1px; }
-
-  .category-line { height: 1px; background: ${T.border}; margin-bottom: 0; }
-
-  .service-row {
-    display: flex; align-items: center;
-    justify-content: space-between; padding: 18px 0;
-    border-bottom: 1px solid ${T.border};
-    cursor: pointer; gap: 16px;
-    transition: padding-left 0.2s, color 0.2s;
-  }
-
-  .service-row:first-child { border-top: 1px solid ${T.border}; }
-  .service-row:hover { padding-left: 8px; }
-  .service-row:hover .service-row-name { color: ${T.accent}; }
-
-  .service-row-left { display: flex; align-items: center; gap: 28px; }
-  .service-row-name { font-size: 15px; font-weight: 400; color: ${T.black}; transition: color 0.2s; }
-  .service-row-duration { font-size: 12px; color: ${T.muted}; letter-spacing: 0.5px; }
-
-  .service-row-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px; font-weight: 400; font-style: italic;
-    color: ${T.dark}; white-space: nowrap;
-  }
+  /* ── Shared page-hero → Tailwind @apply (index.css);
+        Services page list → redesigned in Tailwind (ServicesPage) ── */
 
   /* ── PACKAGES PAGE ── */
   .packages-page { padding: 64px 56px; background: ${T.cream}; }
@@ -506,9 +444,6 @@ const styles = `
   }
 
   @media (max-width: 768px) {
-    .page-hero { padding: 56px 24px 40px; }
-    .page-hero-inner { grid-template-columns: 1fr; gap: 32px; }
-    .services-full { padding: 40px 24px; }
     .packages-page { padding: 40px 24px; }
     .packages-grid-page { grid-template-columns: 1fr; }
     .booking-layout { grid-template-columns: 1fr; }
@@ -532,9 +467,6 @@ const styles = `
   }
 
   @media (max-width: 400px) {
-    .hero-title { font-size: 44px; letter-spacing: -1px; }
-    .hero-left { padding: 48px 20px; }
-    .page-hero-title { font-size: 40px; letter-spacing: -1px; }
     .display-title { font-size: 32px; }
   }
 
