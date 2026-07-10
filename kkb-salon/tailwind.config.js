@@ -1,25 +1,27 @@
-/** Tailwind config — palette mirrors src/tokens.js exactly.
- *  preflight is OFF so Tailwind coexists with the existing CSS
- *  (styles.js / admin.css) during the incremental migration.
- *  Once everything is on Tailwind, flip preflight back on. */
+/** Tailwind config — the palette is derived from src/tokens.js, the single
+ *  source of truth for brand colors. Change a color there and it flows to
+ *  every Tailwind class AND the few remaining inline styles that read T.
+ *  preflight is OFF so Tailwind coexists with the base rules in index.css. */
+import T from "./src/tokens.js";
+
 export default {
   content: ["./index.html", "./src/**/*.{js,jsx}"],
   corePlugins: { preflight: false },
   theme: {
     extend: {
       colors: {
-        cream:   "#FDFAF7",
-        blush:   "#EDD5DA",
-        blush2:  "#E2C0C8",
-        panel:   "#FAF8F5",
-        line:    "#E8D8DC",
-        line2:   "#DEC8CE",
-        ink:     "#1C1C1C",
-        dark:    "#3A2830",
-        warm:    "#7A5C64",
-        muted:   "#A08890",
-        accent:  "#C4748A",
-        accentD: "#A85C72",
+        cream:   T.cream,
+        panel:   T.panel,
+        blush:   T.blush,
+        blush2:  T.blush2,
+        line:    T.border,
+        line2:   T.border2,
+        ink:     T.black,
+        dark:    T.dark,
+        warm:    T.warm,
+        muted:   T.muted,
+        accent:  T.accent,
+        accentD: T.accentD,
       },
       fontFamily: {
         serif: ["'Cormorant Garamond'", "serif"],

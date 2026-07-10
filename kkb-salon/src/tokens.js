@@ -4,6 +4,7 @@
 const T = {
   // ── Base backgrounds ──
   cream:   "#FDFAF7",   // Page base — warm off-white
+  panel:   "#FAF8F5",   // Admin card/table surface — soft off-white
   blush:   "#EDD5DA",   // Section alternates — medium pink
   blush2:  "#E2C0C8",   // Deeper pink for hover states & gallery
   white:   "#FFFFFF",   // Form inputs only
