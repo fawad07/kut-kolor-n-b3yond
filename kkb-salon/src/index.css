@@ -1,11 +1,25 @@
-/* Tailwind for the incremental migration.
-   Base/preflight is disabled in tailwind.config.js so this does not
-   disturb the existing hand-written CSS in styles.js / admin.css. */
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500;1,600&family=Jost:wght@300;400;500;600&display=swap');
+
+/* Tailwind entry. Preflight is disabled in tailwind.config.js; the small
+   global base rules the site needs live here (reset, body, .page). */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* ── Buttons (migrated from styles.js) ────────────────────
+/* ── Global base ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  @apply bg-cream text-ink font-sans text-[15px] leading-[1.7];
+  -webkit-font-smoothing: antialiased;
+}
+.page { @apply pt-[72px] min-h-screen; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; }
+}
+
+/* ── Buttons ──────────────────────────────────────────────
    Repeated across the site, so defined once here with @apply.
    Markup keeps the same class names (btn-primary, etc.). */
 @layer components {
@@ -50,7 +64,7 @@
   }
   .display-title {
     @apply font-serif text-[clamp(40px,5vw,68px)] font-normal leading-[1.05]
-           text-ink tracking-[-0.5px];
+           text-ink tracking-[-0.5px] max-[400px]:text-[32px];
   }
   .display-title em { @apply italic text-accent; }
 

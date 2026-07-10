@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import T from "./tokens.js";
-import styles from "./styles.js";
 import "./admin.css";
 
 // ── DATA ──────────────────────────────────────────────────
@@ -3271,7 +3270,6 @@ export default function App() {
 
   return (
     <>
-      <style>{styles}</style>
       <Nav current={page} navigate={navigate} menuOpen={menuOpen} setMenuOpen={setMenuOpen} />
       <PageComponent navigate={navigate} />
     </>
