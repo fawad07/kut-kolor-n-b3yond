@@ -392,27 +392,10 @@ const SERVICE_CARDS = [
 function ServicesCarousel({ navigate }) {
   const [index,   setIndex]   = useState(0);
   const [paused,  setPaused]  = useState(false);
-  const [isMobile, setIsMobile] = useState(
-    typeof window !== "undefined" && window.innerWidth <= 768
-  );
 
   const total    = SERVICE_CARDS.length;
-  const visible  = isMobile ? 1 : 2;          // cards visible at once
-  const stepPct  = isMobile ? 85 : 50;        // matches .service-card min-width in CSS
-  const maxIndex = total - visible;
+  const maxIndex = total - 1;   // one full-width card per view
   const INTERVAL = 3000; // ms between slides
-
-  // Track viewport size so step/visible count stay in sync with CSS breakpoint
-  useEffect(() => {
-    const onResize = () => setIsMobile(window.innerWidth <= 768);
-    window.addEventListener("resize", onResize);
-    return () => window.removeEventListener("resize", onResize);
-  }, []);
-
-  // Clamp index if maxIndex shrinks (e.g. resizing from desktop to mobile)
-  useEffect(() => {
-    setIndex(i => Math.min(i, maxIndex));
-  }, [maxIndex]);
 
   // Auto-advance — loops back to 0 when it hits the end
   useEffect(() => {
@@ -435,11 +418,11 @@ function ServicesCarousel({ navigate }) {
       <div className="overflow-hidden border border-line">
         <div
           className="flex will-change-transform transition-transform duration-[450ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
-          style={{ transform: `translateX(calc(-${index * stepPct}% - ${index}px))` }}
+          style={{ transform: `translateX(-${index * 100}%)` }}
         >
           {SERVICE_CARDS.map(s => (
             <div
-              className="group flex flex-col flex-shrink-0 min-w-0 w-[85%] md:w-[calc(50%-0.5px)] bg-cream cursor-pointer border-r border-line last:border-r-0 transition-shadow hover:shadow-[inset_0_0_0_1px_#C4748A]"
+              className="group flex flex-col flex-shrink-0 min-w-0 w-full bg-cream cursor-pointer transition-shadow hover:shadow-[inset_0_0_0_1px_#C4748A]"
               key={s.name}
               onClick={() => navigate(s.page)}
             >
