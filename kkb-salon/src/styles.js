@@ -46,78 +46,7 @@ const styles = `
   /* ── BOOKING PAGE — redesigned in Tailwind (BookingPage);
         form-* + time-slot shared classes → @apply in index.css ── */
 
-  /* ── STYLISTS PAGE ── */
-  .stylists-section {
-    padding: 80px 56px;
-    background: ${T.cream};
-    display: flex; flex-direction: column; align-items: center;
-  }
-
-  .stylist-card-wrap {
-    width: 100%; max-width: 720px; margin-top: 56px;
-    border: 1px solid ${T.border}; overflow: hidden;
-    display: grid; grid-template-columns: 280px 1fr;
-    transition: box-shadow 0.3s;
-  }
-
-  .stylist-card-wrap:hover {
-    box-shadow: 0 8px 40px rgba(58,40,48,0.10);
-  }
-
-  .stylist-avatar {
-    background: ${T.blush2};
-    display: flex; align-items: center; justify-content: center;
-    min-height: 360px; border-right: 1px solid ${T.border};
-    position: relative; overflow: hidden;
-  }
-
-  .stylist-avatar-bg {
-    position: absolute;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 160px; font-weight: 300; font-style: italic;
-    color: rgba(196,116,138,0.1);
-    bottom: -20px; right: -10px; line-height: 1; user-select: none;
-  }
-
-  .stylist-avatar-emoji { position: relative; z-index: 1; font-size: 80px; }
-
-  .stylist-info {
-    padding: 48px 44px;
-    display: flex; flex-direction: column; justify-content: center;
-    background: ${T.cream};
-  }
-
-  .stylist-role {
-    font-size: 10px; letter-spacing: 3px;
-    text-transform: uppercase; color: ${T.accent}; margin-bottom: 12px;
-  }
-
-  .stylist-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 44px; font-weight: 400; font-style: italic;
-    color: ${T.black}; line-height: 1;
-    letter-spacing: -0.5px; margin-bottom: 20px;
-  }
-
-  .stylist-divider {
-    width: 40px; height: 1px;
-    background: ${T.accent}; margin-bottom: 20px;
-  }
-
-  .stylist-bio {
-    font-size: 14px; font-weight: 300;
-    color: ${T.warm}; line-height: 1.8; margin-bottom: 28px;
-  }
-
-  .stylist-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 36px; }
-
-  .tag {
-    font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase;
-    padding: 5px 12px; border: 1px solid ${T.border};
-    color: ${T.muted}; background: ${T.cream}; transition: all 0.2s;
-  }
-
-  .tag:hover { border-color: ${T.accent}; color: ${T.accent}; }
+  /* ── STYLISTS PAGE — redesigned in Tailwind (StylistsPage) ── */
 
   /* ── GALLERY PAGE ── */
   .gallery-nav {
@@ -262,14 +191,9 @@ const styles = `
   /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
     .services-grid { grid-template-columns: 1fr; }
-    .stylists-grid { grid-template-columns: repeat(2, 1fr); }
   }
 
   @media (max-width: 768px) {
-    .stylists-section { padding: 48px 24px; }
-    .stylist-card-wrap { grid-template-columns: 1fr; }
-    .stylist-avatar { min-height: 240px; border-right: none; border-bottom: 1px solid ${T.border}; }
-    .stylist-info { padding: 32px 24px; }
     .gallery-nav { padding: 28px 24px 0; }
     .gallery-grid { grid-template-columns: repeat(2, 1fr); margin: 24px; }
     .about-page-hero { grid-template-columns: 1fr; }

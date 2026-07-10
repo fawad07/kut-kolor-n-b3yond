@@ -1339,35 +1339,33 @@ function StylistsPage({ navigate }) {
         </div>
       </div>
 
-      <div className="stylists-section">
+      <section className="bg-cream px-6 md:px-14 py-12 md:py-20 flex flex-col items-center">
         <div className="eyebrow">Your stylist</div>
 
-        <div className="stylist-card-wrap">
+        <div className="w-full max-w-[720px] mt-14 border border-line overflow-hidden grid grid-cols-1 md:grid-cols-[280px_1fr] transition-shadow hover:shadow-[0_8px_40px_rgba(58,40,48,0.10)]">
           {/* Left — avatar panel */}
-          <div className="stylist-avatar">
-            <div className="stylist-avatar-bg">✦</div>
-            <div className="stylist-avatar-emoji">{s.emoji}</div>
+          <div className="relative overflow-hidden flex items-center justify-center bg-blush2 min-h-[240px] md:min-h-[360px] border-b md:border-b-0 md:border-r border-line">
+            <div className="absolute bottom-[-20px] right-[-10px] font-serif italic font-light text-[160px] leading-none text-accent/10 select-none">✦</div>
+            <div className="relative z-[1] text-[80px]">{s.emoji}</div>
           </div>
 
           {/* Right — info panel */}
-          <div className="stylist-info">
-            <div className="stylist-role">{s.title}</div>
-            <div className="stylist-name">{s.name}</div>
-            <div className="stylist-divider" />
-            <p className="stylist-bio">{s.bio}</p>
-            <div className="stylist-tags">
-              {s.tags.map(t => <span className="tag" key={t}>{t}</span>)}
+          <div className="flex flex-col justify-center bg-cream px-6 md:px-11 py-8 md:py-12">
+            <div className="text-[10px] tracking-[3px] uppercase text-accent mb-3">{s.title}</div>
+            <div className="font-serif italic text-[44px] font-normal leading-none tracking-[-0.5px] text-ink mb-5">{s.name}</div>
+            <div className="w-10 h-px bg-accent mb-5" />
+            <p className="text-[14px] font-light text-warm leading-[1.8] mb-7">{s.bio}</p>
+            <div className="flex flex-wrap gap-2 mb-9">
+              {s.tags.map(t => (
+                <span key={t} className="text-[10px] tracking-[1.5px] uppercase px-3 py-[5px] border border-line text-muted bg-cream transition-all hover:border-accent hover:text-accent">{t}</span>
+              ))}
             </div>
-            <button
-              className="btn-primary"
-              style={{ alignSelf: "flex-start" }}
-              onClick={() => navigate("Booking")}
-            >
+            <button className="btn-primary self-start" onClick={() => navigate("Booking")}>
               Book with {s.name.split(" ")[0]} →
             </button>
           </div>
         </div>
-      </div>
+      </section>
 
       <Footer navigate={navigate} />
     </div>
