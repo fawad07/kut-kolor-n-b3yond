@@ -684,41 +684,44 @@ function PackagesPage({ navigate }) {
           <p className="page-hero-sub">Save when you bundle. Every package is crafted to deliver a complete experience. Or design your own from scratch — we'll price it on the spot.</p>
         </div>
       </div>
-      <div className="packages-page">
-        <div style={{marginBottom:"48px"}}>
+      <section className="bg-cream px-6 md:px-14 py-10 md:py-16">
+        <div className="mb-12">
           <div className="eyebrow">Curated packages</div>
           <h2 className="display-title">Pick Your <em>Package</em></h2>
         </div>
-        <div className="packages-grid-page">
-          {PACKAGES.map(pkg => (
-            <div className={`package-card-page ${pkg.featured ? "featured" : ""}`} key={pkg.name}>
-              <span className={`pkg-tag ${pkg.featured ? "pkg-tag-light" : ""}`}>{pkg.featured ? "Most Requested" : "Package"}</span>
-              <div className={`pkg-name ${pkg.featured ? "pkg-name-light" : ""}`}>{pkg.name}</div>
-              <div className={`pkg-tagline ${pkg.featured ? "pkg-tagline-light" : ""}`}>{pkg.tagline}</div>
-              <ul className={`pkg-includes ${pkg.featured ? "pkg-includes-light" : ""}`}>
-                {pkg.includes.map(i => <li key={i}>{i}</li>)}
-              </ul>
-              <div className={`pkg-price ${pkg.featured ? "pkg-price-light" : ""}`}>{pkg.price}</div>
-              <div className="pkg-original">{pkg.original}</div>
-              <div className="pkg-save">{pkg.save}</div>
-              <button
-                className={pkg.featured ? "btn-light" : "btn-primary"}
-                style={{marginTop:"24px", width:"100%"}}
-                onClick={() => navigate("Booking")}
-              >
-                Book This Package
-              </button>
-            </div>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
+          {PACKAGES.map(pkg => {
+            const light = pkg.featured;
+            return (
+              <div key={pkg.name}
+                className={`px-9 py-12 cursor-pointer transition-colors ${light ? "bg-dark hover:bg-[#4a3840]" : "bg-cream hover:bg-blush"}`}
+                onClick={() => navigate("Booking")}>
+                <span className={`block text-[10px] tracking-[2.5px] uppercase mb-5 ${light ? "text-blush" : "text-accent"}`}>{light ? "Most Requested" : "Package"}</span>
+                <div className={`font-serif text-[32px] leading-[1.1] mb-1.5 ${light ? "text-cream" : "text-ink"}`}>{pkg.name}</div>
+                <div className={`text-[13px] font-light italic mb-7 ${light ? "text-cream/50" : "text-muted"}`}>{pkg.tagline}</div>
+                <ul className="grid gap-2.5 mb-8">
+                  {pkg.includes.map(i => (
+                    <li key={i} className={`flex items-start gap-3 text-[13px] font-light leading-[1.4] ${light ? "text-cream/60" : "text-warm"}`}>
+                      <span className="text-accent shrink-0">—</span>{i}
+                    </li>
+                  ))}
+                </ul>
+                <div className={`font-serif italic text-[52px] leading-none mb-1 ${light ? "text-cream" : "text-ink"}`}>{pkg.price}</div>
+                <div className="text-[14px] text-muted line-through mb-1">{pkg.original}</div>
+                <div className="text-[11px] tracking-[1.5px] uppercase text-accent mb-7">{pkg.save}</div>
+                <button className={`${light ? "btn-light" : "btn-primary"} w-full mt-6`} onClick={() => navigate("Booking")}>Book This Package</button>
+              </div>
+            );
+          })}
         </div>
-        <div className="builder-box" onClick={() => navigate("Booking")}>
+        <div className="bg-blush border border-line px-8 md:px-12 py-12 md:py-[52px] flex flex-wrap items-center justify-between gap-6 cursor-pointer transition-colors hover:bg-blush2 mt-6" onClick={() => navigate("Booking")}>
           <div>
-            <div className="builder-title">Build Your Own Package</div>
-            <div className="builder-sub">Mix and match any services — we'll calculate your custom price instantly.</div>
+            <div className="font-serif italic text-[30px] text-ink mb-1.5">Build Your Own Package</div>
+            <div className="text-[13px] font-light text-muted">Mix and match any services — we'll calculate your custom price instantly.</div>
           </div>
-          <button className="btn-primary">Start Building →</button>
+          <button className="btn-primary" onClick={() => navigate("Booking")}>Start Building →</button>
         </div>
-      </div>
+      </section>
       <Footer navigate={navigate} />
     </div>
   );

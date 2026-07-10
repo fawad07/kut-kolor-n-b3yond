@@ -37,94 +37,11 @@ const styles = `
   /* ── Home services section + carousel fully migrated to Tailwind ── */
 
   /* ── HOME ABOUT + PACKAGES SECTIONS — redesigned in Tailwind (HomePage) ──
-        pkg-* below are shared with the Packages page and stay for now. */
-
-  .pkg-tag {
-    font-size: 10px; letter-spacing: 2.5px;
-    text-transform: uppercase; color: ${T.accent};
-    margin-bottom: 20px; display: block;
-  }
-
-  .pkg-tag-light { color: ${T.blush}; }
-
-  .pkg-name {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 32px; font-weight: 400;
-    color: ${T.black}; margin-bottom: 6px; line-height: 1.1;
-  }
-
-  .pkg-name-light { color: ${T.cream}; }
-
-  .pkg-tagline {
-    font-size: 13px; font-weight: 300; font-style: italic;
-    color: ${T.muted}; margin-bottom: 28px;
-  }
-
-  .pkg-tagline-light { color: rgba(253,250,247,0.5); }
-
-  .pkg-includes { list-style: none; margin-bottom: 32px; display: grid; gap: 10px; }
-
-  .pkg-includes li {
-    font-size: 13px; font-weight: 300; color: ${T.warm};
-    display: flex; align-items: flex-start; gap: 12px; line-height: 1.4;
-  }
-
-  .pkg-includes-light li { color: rgba(253,250,247,0.6); }
-
-  .pkg-includes li::before { content: '—'; color: ${T.accent}; flex-shrink: 0; }
-
-  .pkg-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 52px; font-weight: 400; font-style: italic;
-    color: ${T.black}; line-height: 1; margin-bottom: 4px;
-  }
-
-  .pkg-price-light { color: ${T.cream}; }
-
-  .pkg-original { font-size: 14px; color: ${T.muted}; text-decoration: line-through; margin-bottom: 4px; }
-  .pkg-save { font-size: 11px; letter-spacing: 1.5px; text-transform: uppercase; color: ${T.accent}; margin-bottom: 28px; }
-
-  /* ── CTA SECTION — redesigned in Tailwind (HomePage) ── */
+        Home about/packages/CTA + Packages page all redesigned in Tailwind. */
 
   /* ── PAGE HERO ── */
   /* ── Shared page-hero → Tailwind @apply (index.css);
-        Services page list → redesigned in Tailwind (ServicesPage) ── */
-
-  /* ── PACKAGES PAGE ── */
-  .packages-page { padding: 64px 56px; background: ${T.cream}; }
-
-  .packages-grid-page {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: ${T.border};
-    border: 1px solid ${T.border}; margin-bottom: 24px;
-  }
-
-  .package-card-page {
-    padding: 48px 36px; background: ${T.cream};
-    cursor: pointer; transition: background 0.3s;
-  }
-
-  .package-card-page:hover { background: ${T.blush}; }
-  .package-card-page.featured { background: ${T.dark}; }
-  .package-card-page.featured:hover { background: #4a3840; }
-
-  .builder-box {
-    background: ${T.blush}; border: 1px solid ${T.border};
-    padding: 52px 48px;
-    display: flex; align-items: center;
-    justify-content: space-between; gap: 24px; flex-wrap: wrap;
-    cursor: pointer; transition: background 0.25s; margin-top: 24px;
-  }
-
-  .builder-box:hover { background: ${T.blush2}; }
-
-  .builder-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 30px; font-weight: 400; font-style: italic;
-    color: ${T.black}; margin-bottom: 6px;
-  }
-
-  .builder-sub { font-size: 13px; font-weight: 300; color: ${T.muted}; }
+        Services & Packages pages → redesigned in Tailwind ── */
 
   /* ── BOOKING PAGE ── */
   .booking-layout {
@@ -444,8 +361,6 @@ const styles = `
   }
 
   @media (max-width: 768px) {
-    .packages-page { padding: 40px 24px; }
-    .packages-grid-page { grid-template-columns: 1fr; }
     .booking-layout { grid-template-columns: 1fr; }
     .booking-form-section { padding: 40px 24px; }
     .booking-sidebar { position: static; height: auto; }
