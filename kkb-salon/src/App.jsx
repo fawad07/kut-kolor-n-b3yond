@@ -132,17 +132,13 @@ function Footer({ navigate }) {
 const LEGAL_UPDATED = "June 27, 2026";
 
 const LH = ({ children }) => (
-  <h2 style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic",
-    fontSize: "26px", color: "#3A2830", margin: "36px 0 12px", fontWeight: 400 }}>
-    {children}
-  </h2>
+  <h2 className="font-serif italic text-[26px] font-normal text-dark mt-9 mb-3">{children}</h2>
 );
 const LP = ({ children }) => (
-  <p style={{ marginBottom: "14px" }}>{children}</p>
+  <p className="mb-3.5">{children}</p>
 );
 const LLink = ({ to, navigate, children }) => (
-  <span onClick={() => navigate(to)}
-    style={{ color: "#C4748A", textDecoration: "underline", cursor: "pointer" }}>
+  <span onClick={() => navigate(to)} className="text-accent underline cursor-pointer">
     {children}
   </span>
 );
@@ -150,18 +146,15 @@ const LLink = ({ to, navigate, children }) => (
 function LegalLayout({ navigate, title, children }) {
   return (
     <>
-      <div style={{ background: "#FDFAF7", padding: "140px 24px 90px" }}>
-        <div style={{ maxWidth: "760px", margin: "0 auto" }}>
-          <h1 style={{ fontFamily: "'Cormorant Garamond', serif", fontStyle: "italic",
-            fontSize: "clamp(34px, 6vw, 54px)", color: "#3A2830", marginBottom: "8px",
-            fontWeight: 400, lineHeight: 1.05 }}>
+      <div className="bg-cream px-6 pt-[140px] pb-[90px]">
+        <div className="max-w-[760px] mx-auto">
+          <h1 className="font-serif italic font-normal text-dark text-[clamp(34px,6vw,54px)] leading-[1.05] mb-2">
             {title}
           </h1>
-          <p style={{ fontSize: "11px", letterSpacing: "2px", textTransform: "uppercase",
-            color: "#A08890", marginBottom: "40px" }}>
+          <p className="text-[11px] tracking-[2px] uppercase text-muted mb-10">
             Last updated {LEGAL_UPDATED}
           </p>
-          <div style={{ fontSize: "15px", lineHeight: 1.8, color: "#5C4951" }}>
+          <div className="text-[15px] leading-[1.8] text-warm">
             {children}
           </div>
         </div>
