@@ -55,35 +55,7 @@ const styles = `
   /* ── ABOUT PAGE — redesigned in Tailwind (AboutPage) ── */
 
   /* ── CONTACT PAGE ── */
-  .contact-layout {
-    display: grid; grid-template-columns: 1fr 1fr;
-    min-height: calc(100vh - 260px);
-    background: ${T.cream};
-  }
-
-  .contact-left { padding: 64px 56px; border-right: 1px solid ${T.border}; }
-
-  .contact-right {
-    background: ${T.blush};
-    display: flex; align-items: center; justify-content: center;
-    flex-direction: column; gap: 16px; padding: 64px 56px;
-  }
-
-  .contact-block { margin-bottom: 32px; }
-
-  .contact-block-label {
-    font-size: 10px; font-weight: 500;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    color: ${T.accent}; margin-bottom: 8px;
-  }
-
-  .contact-block-value { font-size: 15px; font-weight: 300; color: ${T.dark}; line-height: 1.75; }
-
-  .contact-form-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 28px; font-weight: 400; font-style: italic;
-    color: ${T.black}; margin-bottom: 24px;
-  }
+  /* ── CONTACT PAGE — redesigned in Tailwind (ContactPage) ── */
 
   /* ── FOOTER ── */
   /* Footer migrated to Tailwind (Footer component) */
@@ -93,11 +65,6 @@ const styles = `
     .services-grid { grid-template-columns: 1fr; }
   }
 
-  @media (max-width: 768px) {
-    .contact-layout { grid-template-columns: 1fr; }
-    .contact-left { padding: 40px 24px; }
-    .contact-right { min-height: 200px; }
-  }
 
   @media (max-width: 400px) {
     .display-title { font-size: 32px; }

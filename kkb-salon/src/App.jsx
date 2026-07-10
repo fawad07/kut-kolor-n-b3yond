@@ -1516,22 +1516,22 @@ function ContactPage() {
           <p className="page-hero-sub">Questions before you book? Thinking through a big color change? We're here and happy to help.</p>
         </div>
       </div>
-      <div className="contact-layout">
-        <div className="contact-left">
+      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[calc(100vh-260px)] bg-cream">
+        <div className="px-6 md:px-14 py-10 md:py-16 md:border-r md:border-line">
           {[
             { label: "Address", value: "123 Style Avenue\nYour City, ST 00000" },
             { label: "Phone",   value: "(555) 123-4567"                        },
             { label: "Email",   value: "hello@kutkolor.com"                    },
             { label: "Hours",   value: "Mon – Fri: 9am – 7pm\nSaturday: 9am – 6pm\nSunday: 10am – 4pm" },
           ].map(b => (
-            <div className="contact-block" key={b.label}>
-              <div className="contact-block-label">{b.label}</div>
-              <div className="contact-block-value" style={{ whiteSpace: "pre-line" }}>{b.value}</div>
+            <div className="mb-8" key={b.label}>
+              <div className="text-[10px] font-medium tracking-[2.5px] uppercase text-accent mb-2">{b.label}</div>
+              <div className="text-[15px] font-light text-dark leading-[1.75]" style={{ whiteSpace: "pre-line" }}>{b.value}</div>
             </div>
           ))}
 
-          <div style={{ marginTop: "40px", paddingTop: "40px", borderTop: `1px solid ${T.border}` }}>
-            <div className="contact-form-title">Send a Message</div>
+          <div className="mt-10 pt-10 border-t border-line">
+            <div className="font-serif italic text-[28px] font-normal text-ink mb-6">Send a Message</div>
 
             {/* Success state */}
             {submitted ? (
@@ -1599,7 +1599,7 @@ function ContactPage() {
           </div>
         </div>
 
-        <div className="contact-right">
+        <div className="flex flex-col items-center justify-center gap-4 bg-blush px-6 md:px-14 py-16 min-h-[200px] md:min-h-0">
           <span style={{ fontSize: "48px" }}>📍</span>
           <span style={{ fontFamily: "'Cormorant Garamond', serif", fontSize: "24px", fontStyle: "italic", color: T.warm }}>
             Find us here
