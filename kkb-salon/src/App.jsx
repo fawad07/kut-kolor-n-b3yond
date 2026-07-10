@@ -439,7 +439,7 @@ function ServicesCarousel({ navigate }) {
         >
           {SERVICE_CARDS.map(s => (
             <div
-              className="group flex flex-col flex-shrink-0 min-w-[85%] md:min-w-[calc(50%-0.5px)] bg-cream cursor-pointer border-r border-line last:border-r-0 transition-shadow hover:shadow-[inset_0_0_0_1px_#C4748A]"
+              className="group flex flex-col flex-shrink-0 min-w-0 w-[85%] md:w-[calc(50%-0.5px)] bg-cream cursor-pointer border-r border-line last:border-r-0 transition-shadow hover:shadow-[inset_0_0_0_1px_#C4748A]"
               key={s.name}
               onClick={() => navigate(s.page)}
             >
@@ -584,12 +584,12 @@ function HomePage({ navigate }) {
             const light = pkg.featured;
             return (
               <div key={pkg.name}
-                className={`px-9 py-12 cursor-pointer transition-colors ${light ? "bg-dark hover:bg-[#4a3840]" : "bg-blush hover:bg-blush2"}`}
+                className={`flex flex-col px-9 py-12 cursor-pointer transition-colors ${light ? "bg-dark hover:bg-[#4a3840]" : "bg-blush hover:bg-blush2"}`}
                 onClick={() => navigate("Booking")}>
                 <span className={`block text-[10px] tracking-[2.5px] uppercase mb-5 ${light ? "text-blush" : "text-accent"}`}>{light ? "Most Requested" : "Package"}</span>
                 <div className={`font-serif text-[32px] leading-[1.1] mb-1.5 ${light ? "text-cream" : "text-ink"}`}>{pkg.name}</div>
                 <div className={`text-[13px] font-light italic mb-7 ${light ? "text-cream/50" : "text-muted"}`}>{pkg.tagline}</div>
-                <ul className="grid gap-2.5 mb-8">
+                <ul className="grid gap-2.5 mb-8 flex-1 content-start">
                   {pkg.includes.map(i => (
                     <li key={i} className={`flex items-start gap-3 text-[13px] font-light leading-[1.4] ${light ? "text-cream/60" : "text-warm"}`}>
                       <span className="text-accent shrink-0">—</span>{i}
@@ -686,12 +686,12 @@ function PackagesPage({ navigate }) {
             const light = pkg.featured;
             return (
               <div key={pkg.name}
-                className={`px-9 py-12 cursor-pointer transition-colors ${light ? "bg-dark hover:bg-[#4a3840]" : "bg-cream hover:bg-blush"}`}
+                className={`flex flex-col px-9 py-12 cursor-pointer transition-colors ${light ? "bg-dark hover:bg-[#4a3840]" : "bg-cream hover:bg-blush"}`}
                 onClick={() => navigate("Booking")}>
                 <span className={`block text-[10px] tracking-[2.5px] uppercase mb-5 ${light ? "text-blush" : "text-accent"}`}>{light ? "Most Requested" : "Package"}</span>
                 <div className={`font-serif text-[32px] leading-[1.1] mb-1.5 ${light ? "text-cream" : "text-ink"}`}>{pkg.name}</div>
                 <div className={`text-[13px] font-light italic mb-7 ${light ? "text-cream/50" : "text-muted"}`}>{pkg.tagline}</div>
-                <ul className="grid gap-2.5 mb-8">
+                <ul className="grid gap-2.5 mb-8 flex-1 content-start">
                   {pkg.includes.map(i => (
                     <li key={i} className={`flex items-start gap-3 text-[13px] font-light leading-[1.4] ${light ? "text-cream/60" : "text-warm"}`}>
                       <span className="text-accent shrink-0">—</span>{i}
