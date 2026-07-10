@@ -1089,8 +1089,8 @@ function BookingPage({ navigate }) {
           </div>
         </div>
       )}
-      <div className="booking-layout">
-        <div className="booking-form-section">
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_360px] min-h-[calc(100vh-72px)]">
+        <div className="bg-cream px-6 md:px-14 py-10 md:py-16 lg:border-r lg:border-line">
           <div style={{ marginBottom: "48px" }}>
             <div className="eyebrow">Online booking</div>
             <h1 className="display-title" style={{ fontSize: "clamp(36px,4vw,56px)" }}>
@@ -1177,7 +1177,7 @@ function BookingPage({ navigate }) {
 
           <div className="form-group">
             <label className="form-label">Select a Time *</label>
-            <div className="time-slots">
+            <div className="grid grid-cols-3 gap-2">
               {TIME_SLOTS.map(slot => {
                 // Check if this slot is in the past for today's date
                 const isPast = (() => {
@@ -1301,18 +1301,25 @@ function BookingPage({ navigate }) {
         </div>
 
         {/* Sidebar summary */}
-        <div className="booking-sidebar">
-          <div className="sidebar-title">Your Summary</div>
-          <div className="sidebar-row"><span className="sidebar-label">Service</span><span className="sidebar-value">{form.service || "—"}</span></div>
-          <div className="sidebar-row"><span className="sidebar-label">Duration</span><span className="sidebar-value">{selectedDuration}</span></div>
-          <div className="sidebar-row"><span className="sidebar-label">Stylist</span><span className="sidebar-value">{form.stylist}</span></div>
-          <div className="sidebar-row"><span className="sidebar-label">Date</span><span className="sidebar-value">{form.preferred_date || "—"}</span></div>
-          <div className="sidebar-row"><span className="sidebar-label">Time</span><span className="sidebar-value">{form.preferred_time || "—"}</span></div>
-          <div className="sidebar-total">
-            <span className="sidebar-total-label">Total</span>
-            <div className="sidebar-total-price">{selectedPrice}</div>
+        <div className="bg-blush px-6 md:px-10 py-10 md:py-16 lg:sticky lg:top-[72px] lg:h-[calc(100vh-72px)] lg:overflow-y-auto">
+          <div className="font-serif italic text-[24px] text-dark mb-7 pb-5 border-b border-line2">Your Summary</div>
+          {[
+            ["Service",  form.service || "—"],
+            ["Duration", selectedDuration],
+            ["Stylist",  form.stylist],
+            ["Date",     form.preferred_date || "—"],
+            ["Time",     form.preferred_time || "—"],
+          ].map(([label, value]) => (
+            <div key={label} className="flex justify-between items-start gap-4 py-[13px] border-b border-line text-[13px]">
+              <span className="text-muted font-light shrink-0">{label}</span>
+              <span className="text-dark font-normal text-right">{value}</span>
+            </div>
+          ))}
+          <div className="flex justify-between items-baseline pt-6 mt-2">
+            <span className="text-[10px] tracking-[2px] uppercase text-muted">Total</span>
+            <div className="font-serif italic text-[48px] leading-none text-dark">{selectedPrice}</div>
           </div>
-          <p style={{ fontSize: "12px", color: T.muted, marginTop: "24px", lineHeight: "1.7", fontWeight: "300" }}>
+          <p className="text-[12px] text-muted font-light leading-[1.7] mt-6">
             Starting rates shown. Final price confirmed at appointment.
           </p>
         </div>

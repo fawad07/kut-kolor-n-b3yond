@@ -30,7 +30,7 @@ const styles = `
   /* ── SECTION LABEL ── */
   /* .eyebrow and .display-title migrated to Tailwind @layer components (index.css) */
 
-  .body-text { font-size: 15px; font-weight: 300; color: ${T.warm}; line-height: 1.8; }
+  /* .body-text migrated to Tailwind @layer components (index.css) */
 
   /* ── HOME HERO + INTRO BAND — redesigned in Tailwind (HomePage) ── */
 
@@ -43,103 +43,8 @@ const styles = `
   /* ── Shared page-hero → Tailwind @apply (index.css);
         Services & Packages pages → redesigned in Tailwind ── */
 
-  /* ── BOOKING PAGE ── */
-  .booking-layout {
-    display: grid; grid-template-columns: 1fr 360px;
-    min-height: calc(100vh - 72px);
-  }
-
-  .booking-form-section {
-    padding: 64px 56px; background: ${T.cream};
-    border-right: 1px solid ${T.border};
-  }
-
-  .booking-sidebar {
-    padding: 64px 40px; background: ${T.blush};
-    position: sticky; top: 72px;
-    height: calc(100vh - 72px); overflow-y: auto;
-  }
-
-  .form-group { margin-bottom: 28px; }
-
-  .form-label {
-    display: block; font-size: 10px; font-weight: 500;
-    letter-spacing: 2.5px; text-transform: uppercase;
-    color: ${T.muted}; margin-bottom: 10px;
-  }
-
-  .form-input {
-    width: 100%; background: ${T.white};
-    border: 1px solid ${T.border}; color: ${T.black};
-    padding: 13px 16px; font-family: 'Jost', sans-serif;
-    font-size: 14px; font-weight: 300; outline: none;
-    transition: border-color 0.2s; -webkit-appearance: none;
-  }
-
-  .form-input:focus { border-color: ${T.accent}; }
-
-  .form-select {
-    width: 100%; background: ${T.white};
-    border: 1px solid ${T.border}; color: ${T.black};
-    padding: 13px 16px; font-family: 'Jost', sans-serif;
-    font-size: 14px; font-weight: 300; outline: none;
-    cursor: pointer; appearance: none; transition: border-color 0.2s;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A08890' stroke-width='1' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-    background-repeat: no-repeat; background-position: right 16px center;
-  }
-
-  .form-select:focus { border-color: ${T.accent}; }
-
-  .time-slots { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
-
-  .time-slot {
-    background: ${T.white}; border: 1px solid ${T.border};
-    color: ${T.warm}; padding: 10px 8px;
-    font-size: 12px; font-weight: 400; text-align: center;
-    cursor: pointer; transition: all 0.2s; letter-spacing: 0.3px;
-  }
-
-  .time-slot:hover { border-color: ${T.accent}; color: ${T.black}; }
-  .time-slot.selected { background: ${T.dark}; border-color: ${T.dark}; color: ${T.cream}; }
-  .time-slot.past {
-    background: ${T.cream}; color: ${T.border2};
-    border-color: ${T.border}; cursor: not-allowed;
-    text-decoration: line-through; opacity: 0.5;
-  }
-  .time-slot.past:hover { border-color: ${T.border}; color: ${T.border2}; }
-
-  .sidebar-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px; font-weight: 400; font-style: italic;
-    color: ${T.dark}; margin-bottom: 28px;
-    padding-bottom: 20px; border-bottom: 1px solid ${T.border2};
-  }
-
-  .sidebar-row {
-    display: flex; justify-content: space-between;
-    align-items: flex-start; padding: 13px 0;
-    border-bottom: 1px solid ${T.border};
-    font-size: 13px; gap: 16px;
-  }
-
-  .sidebar-label { color: ${T.muted}; flex-shrink: 0; font-weight: 300; }
-  .sidebar-value { color: ${T.dark}; text-align: right; font-weight: 400; }
-
-  .sidebar-total {
-    display: flex; justify-content: space-between;
-    align-items: baseline; padding: 24px 0 0; margin-top: 8px;
-  }
-
-  .sidebar-total-label {
-    font-size: 10px; letter-spacing: 2px;
-    text-transform: uppercase; color: ${T.muted};
-  }
-
-  .sidebar-total-price {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 48px; font-weight: 400; font-style: italic;
-    color: ${T.dark}; line-height: 1;
-  }
+  /* ── BOOKING PAGE — redesigned in Tailwind (BookingPage);
+        form-* + time-slot shared classes → @apply in index.css ── */
 
   /* ── STYLISTS PAGE ── */
   .stylists-section {
@@ -361,9 +266,6 @@ const styles = `
   }
 
   @media (max-width: 768px) {
-    .booking-layout { grid-template-columns: 1fr; }
-    .booking-form-section { padding: 40px 24px; }
-    .booking-sidebar { position: static; height: auto; }
     .stylists-section { padding: 48px 24px; }
     .stylist-card-wrap { grid-template-columns: 1fr; }
     .stylist-avatar { min-height: 240px; border-right: none; border-bottom: 1px solid ${T.border}; }
@@ -378,7 +280,6 @@ const styles = `
     .contact-layout { grid-template-columns: 1fr; }
     .contact-left { padding: 40px 24px; }
     .contact-right { min-height: 200px; }
-    .time-slots { grid-template-columns: repeat(3, 1fr); }
   }
 
   @media (max-width: 400px) {
