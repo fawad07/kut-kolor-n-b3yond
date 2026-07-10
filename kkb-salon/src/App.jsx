@@ -1384,18 +1384,21 @@ function GalleryPage({ navigate }) {
           <p className="page-hero-sub">Work from our chairs — real clients, real results. See something you love? Book that look directly.</p>
         </div>
       </div>
-      <div className="gallery-nav">
+      <div className="flex px-6 md:px-14 pt-7 md:pt-9 border-b border-line bg-cream overflow-x-auto">
         {categories.map(c => (
-          <button key={c} className={`gallery-btn ${active === c ? "active" : ""}`} onClick={() => setActive(c)}>{c}</button>
+          <button key={c}
+            className={`bg-transparent border-0 border-b-[1.5px] px-5 pt-2.5 pb-3 -mb-px font-sans text-[11px] tracking-[2px] uppercase cursor-pointer transition-all whitespace-nowrap ${active === c ? "text-ink border-accent" : "text-muted border-transparent hover:text-ink"}`}
+            onClick={() => setActive(c)}>{c}</button>
         ))}
       </div>
-      <div className="gallery-grid">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-line p-px mx-6 md:mx-14 mt-6 md:mt-8 mb-12 md:mb-16">
         {filtered.map((item, i) => (
-          <div className="gallery-item" key={i}>
+          <div key={i}
+            className={`group relative overflow-hidden flex items-center justify-center aspect-[3/4] text-[48px] cursor-pointer ${i % 2 ? "bg-blush2" : "bg-blush"}`}>
             {item.emoji}
-            <div className="gallery-overlay">
-              <div className="gallery-overlay-label">{item.label}</div>
-              <button className="btn-outline" style={{color:T.cream,borderColor:"rgba(253,250,247,0.3)",padding:"10px 28px"}} onClick={() => navigate("Booking")}>
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[rgba(58,40,48,0.88)] opacity-0 transition-opacity group-hover:opacity-100">
+              <div className="font-serif italic text-[22px] text-cream">{item.label}</div>
+              <button className="btn-outline text-cream border-cream/30 px-7 py-2.5" onClick={() => navigate("Booking")}>
                 Book This Look
               </button>
             </div>

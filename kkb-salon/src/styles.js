@@ -49,54 +49,7 @@ const styles = `
   /* ── STYLISTS PAGE — redesigned in Tailwind (StylistsPage) ── */
 
   /* ── GALLERY PAGE ── */
-  .gallery-nav {
-    display: flex; gap: 0; padding: 36px 56px 0;
-    border-bottom: 1px solid ${T.border}; background: ${T.cream};
-  }
-
-  .gallery-btn {
-    background: transparent; border: none;
-    border-bottom: 1.5px solid transparent;
-    color: ${T.muted}; padding: 10px 20px 12px;
-    font-family: 'Jost', sans-serif;
-    font-size: 11px; letter-spacing: 2px;
-    text-transform: uppercase; cursor: pointer;
-    transition: all 0.2s; margin-bottom: -1px;
-  }
-
-  .gallery-btn:hover { color: ${T.black}; }
-  .gallery-btn.active { color: ${T.black}; border-bottom-color: ${T.accent}; }
-
-  .gallery-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: ${T.border};
-    margin: 32px 56px 64px; padding: 1px;
-  }
-
-  .gallery-item {
-    background: ${T.blush}; aspect-ratio: 3/4;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 48px; cursor: pointer;
-    position: relative; overflow: hidden;
-  }
-
-  .gallery-item:nth-child(even) { background: ${T.blush2}; }
-
-  .gallery-item:hover .gallery-overlay { opacity: 1; }
-
-  .gallery-overlay {
-    position: absolute; inset: 0;
-    background: rgba(58,40,48,0.88);
-    display: flex; align-items: center; justify-content: center;
-    opacity: 0; transition: opacity 0.25s;
-    flex-direction: column; gap: 16px;
-  }
-
-  .gallery-overlay-label {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 22px; font-weight: 400; font-style: italic;
-    color: ${T.cream};
-  }
+  /* ── GALLERY PAGE — redesigned in Tailwind (GalleryPage) ── */
 
   /* ── ABOUT PAGE ── */
   .about-page-hero {
@@ -194,8 +147,6 @@ const styles = `
   }
 
   @media (max-width: 768px) {
-    .gallery-nav { padding: 28px 24px 0; }
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); margin: 24px; }
     .about-page-hero { grid-template-columns: 1fr; }
     .about-page-right { display: none; }
     .about-page-left { padding: 56px 24px; }
