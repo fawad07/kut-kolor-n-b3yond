@@ -422,25 +422,28 @@ function ServicesCarousel({ navigate }) {
         >
           {SERVICE_CARDS.map(s => (
             <div
-              className="group flex flex-col flex-shrink-0 min-w-0 w-full bg-cream cursor-pointer transition-shadow hover:shadow-[inset_0_0_0_1px_#C4748A]"
+              className="group grid grid-cols-1 md:grid-cols-[44%_1fr] flex-shrink-0 min-w-0 w-full bg-cream cursor-pointer"
               key={s.name}
               onClick={() => navigate(s.page)}
             >
-              {/* Header bar */}
-              <div className="flex items-center justify-between px-9 py-5 bg-accent transition-colors group-hover:bg-accentD">
-                <div className="flex items-center gap-3.5">
-                  <span className="font-serif italic font-light text-[13px] tracking-[1px] text-cream/60">{s.n}</span>
-                  <span className="font-serif font-medium text-[26px] leading-none tracking-[-0.3px] text-cream">{s.name}</span>
-                </div>
-                <span className="text-[18px] text-cream/50 transition-transform group-hover:translate-x-1 group-hover:text-cream">→</span>
+              {/* Left — dark display panel */}
+              <div className="relative overflow-hidden bg-dark flex flex-col justify-between p-10 md:p-14 min-h-[280px] md:min-h-[420px]">
+                <span className="absolute -bottom-12 -right-3 font-serif italic leading-none text-[240px] text-cream/[0.05] select-none pointer-events-none">{s.n}</span>
+                <div className="relative z-[1] text-[11px] tracking-[3px] uppercase text-blush2">Service {s.n}</div>
+                <h3 className="relative z-[1] font-serif font-normal text-cream leading-[0.92] tracking-[-1px] text-[clamp(44px,5vw,72px)]">{s.name}</h3>
               </div>
 
-              {/* Body */}
-              <div className="flex flex-col flex-1 gap-6 px-9 pt-9 pb-10">
-                <p className="text-[14px] font-light text-warm leading-[1.75] flex-1">{s.desc}</p>
-                <div className="flex items-center justify-between pt-5 border-t border-line">
-                  <div className="text-[11px] font-medium tracking-[2px] uppercase text-accent">{s.price}</div>
-                  <div className="text-[11px] font-normal tracking-[1.5px] uppercase text-muted border border-line px-2.5 py-1">{s.tag}</div>
+              {/* Right — content panel */}
+              <div className="flex flex-col justify-center gap-7 p-10 md:p-14">
+                <p className="text-[15px] md:text-[17px] font-light text-warm leading-[1.85] max-w-[460px]">{s.desc}</p>
+                <div className="flex items-center gap-4">
+                  <span className="font-serif italic text-[28px] text-accent leading-none">{s.price}</span>
+                  <span className="w-px h-5 bg-line2" />
+                  <span className="text-[11px] tracking-[2px] uppercase text-muted">{s.tag}</span>
+                </div>
+                <div className="inline-flex items-center gap-3 text-[11px] font-medium tracking-[2.5px] uppercase text-ink transition-colors group-hover:text-accent">
+                  Book this service
+                  <span className="transition-transform duration-300 group-hover:translate-x-1.5">→</span>
                 </div>
               </div>
             </div>
