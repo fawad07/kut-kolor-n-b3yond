@@ -1413,37 +1413,37 @@ function GalleryPage({ navigate }) {
 function AboutPage({ navigate }) {
   return (
     <div className="page">
-      <div className="about-page-hero">
-        <div className="about-page-left">
+      <div className="grid grid-cols-1 md:grid-cols-2 min-h-[560px] border-b border-line">
+        <div className="flex flex-col justify-center bg-cream px-6 md:px-14 py-14 md:py-20 md:border-r md:border-line">
           <div className="eyebrow">Our story</div>
-          <h1 className="display-title" style={{marginBottom:"24px"}}>More than<br /><em>just hair.</em></h1>
-          <div className="about-body" style={{marginBottom:"36px"}}>
+          <h1 className="display-title mb-6">More than<br /><em>just hair.</em></h1>
+          <div className="about-body space-y-4 mb-9">
             <p>Kut, Kolor N B3yond was born from one belief: every person deserves to walk out of a salon feeling like the best version of themselves — regardless of age, texture, or budget.</p>
             <p>We built this salon for the community. For the grandmother celebrating her birthday, the teenager finding her style, the professional who needs to look sharp, and the artist ready to go bold.</p>
             <p>Our team brings decades of combined experience and genuine passion to every single appointment.</p>
           </div>
-          <button className="btn-primary" onClick={() => navigate("Stylists")}>Meet the Team →</button>
+          <div><button className="btn-primary" onClick={() => navigate("Stylists")}>Meet the Team →</button></div>
         </div>
-        <div className="about-page-right">
-          <div className="about-page-right-watermark">KKB</div>
-          <div className="about-page-right-inner">
-            "We don't just do hair — we help people feel like themselves again."
+        <div className="hidden md:flex relative overflow-hidden items-center justify-center bg-dark">
+          <div className="absolute right-[-20px] bottom-[-30px] font-serif italic font-light text-[200px] leading-none text-cream/[0.03] select-none">KKB</div>
+          <div className="relative z-[1] p-[60px] font-serif italic font-light text-[clamp(22px,2.5vw,32px)] text-cream/70 leading-[1.5] text-center">
+            &ldquo;We don&rsquo;t just do hair — we help people feel like themselves again.&rdquo;
           </div>
         </div>
       </div>
-      <div className="values-area">
+      <div className="bg-blush px-6 md:px-14 py-14 md:py-20">
         <div className="eyebrow">What we stand for</div>
         <h2 className="display-title">Our <em>Values</em></h2>
-        <div className="values-grid">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line mt-12">
           {[
             { n:"01", title:"Craft First",      desc:"Every cut, every color is a deliberate act of craft. No shortcuts, no compromises, no bad days in our chairs." },
             { n:"02", title:"Everyone Welcome", desc:"Young, old, all textures, all budgets. This is a salon built for real people living real and beautiful lives." },
             { n:"03", title:"Beyond the Chair", desc:"We build long-term relationships, not just appointments. Your hair journey is something we're genuinely part of." },
           ].map(v => (
-            <div className="value-card" key={v.n}>
-              <div className="value-num">{v.n}</div>
-              <div className="value-title">{v.title}</div>
-              <p className="value-desc">{v.desc}</p>
+            <div className="bg-blush px-9 py-12" key={v.n}>
+              <div className="font-serif italic font-light text-[64px] leading-none text-line2 mb-5">{v.n}</div>
+              <div className="font-serif text-[24px] font-normal text-ink mb-2.5">{v.title}</div>
+              <p className="text-[13px] font-light text-warm leading-[1.75]">{v.desc}</p>
             </div>
           ))}
         </div>

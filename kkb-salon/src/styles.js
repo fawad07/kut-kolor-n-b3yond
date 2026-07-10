@@ -52,60 +52,7 @@ const styles = `
   /* ── GALLERY PAGE — redesigned in Tailwind (GalleryPage) ── */
 
   /* ── ABOUT PAGE ── */
-  .about-page-hero {
-    display: grid; grid-template-columns: 1fr 1fr;
-    min-height: 560px; border-bottom: 1px solid ${T.border};
-  }
-
-  .about-page-left {
-    padding: 80px 56px; background: ${T.cream};
-    border-right: 1px solid ${T.border};
-    display: flex; flex-direction: column; justify-content: center;
-  }
-
-  .about-page-right {
-    background: ${T.dark};
-    display: flex; align-items: center; justify-content: center;
-    position: relative; overflow: hidden;
-  }
-
-  .about-page-right-watermark {
-    position: absolute; font-family: 'Cormorant Garamond', serif;
-    font-size: 200px; font-weight: 300; font-style: italic;
-    color: rgba(253,250,247,0.03); line-height: 1;
-    right: -20px; bottom: -30px; user-select: none;
-  }
-
-  .about-page-right-inner {
-    position: relative; z-index: 1; padding: 60px;
-    font-family: 'Cormorant Garamond', serif;
-    font-size: clamp(22px, 2.5vw, 32px); font-weight: 300; font-style: italic;
-    color: rgba(253,250,247,0.7); line-height: 1.5; text-align: center;
-  }
-
-  .values-area { padding: 80px 56px; background: ${T.blush}; }
-
-  .values-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 1px; background: ${T.border};
-    border: 1px solid ${T.border}; margin-top: 48px;
-  }
-
-  .value-card { padding: 48px 36px; background: ${T.blush}; }
-
-  .value-num {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 64px; font-weight: 300; font-style: italic;
-    color: ${T.border2}; line-height: 1; margin-bottom: 20px;
-  }
-
-  .value-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px; font-weight: 400;
-    color: ${T.black}; margin-bottom: 10px;
-  }
-
-  .value-desc { font-size: 13px; font-weight: 300; color: ${T.warm}; line-height: 1.75; }
+  /* ── ABOUT PAGE — redesigned in Tailwind (AboutPage) ── */
 
   /* ── CONTACT PAGE ── */
   .contact-layout {
@@ -147,11 +94,6 @@ const styles = `
   }
 
   @media (max-width: 768px) {
-    .about-page-hero { grid-template-columns: 1fr; }
-    .about-page-right { display: none; }
-    .about-page-left { padding: 56px 24px; }
-    .values-area { padding: 56px 24px; }
-    .values-grid { grid-template-columns: 1fr; }
     .contact-layout { grid-template-columns: 1fr; }
     .contact-left { padding: 40px 24px; }
     .contact-right { min-height: 200px; }
