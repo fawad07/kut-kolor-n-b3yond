@@ -7,6 +7,9 @@
 @tailwind utilities;
 
 /* ── Global base ── */
+/* Corner radius — single knob for the whole site. Try 6px (subtle),
+   16px (pronounced), or 0 (original sharp). */
+:root { --r: 16px; }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -25,14 +28,14 @@ body {
 @layer components {
   .btn-primary {
     @apply bg-ink text-cream border border-ink px-10 py-3.5 font-sans
-           text-[11px] font-medium tracking-[2.5px] uppercase
+           text-[11px] font-medium tracking-[2.5px] uppercase rounded-[var(--r)]
            cursor-pointer transition-all inline-block;
   }
   .btn-primary:hover { @apply bg-accent border-accent; }
 
   .btn-outline {
     @apply bg-transparent text-ink border border-ink px-10 py-3.5 font-sans
-           text-[11px] font-medium tracking-[2.5px] uppercase
+           text-[11px] font-medium tracking-[2.5px] uppercase rounded-[var(--r)]
            cursor-pointer transition-all;
   }
   .btn-outline:hover { @apply bg-ink text-cream; }
@@ -46,14 +49,14 @@ body {
 
   .btn-light {
     @apply bg-cream text-ink border border-line2 px-10 py-3.5 font-sans
-           text-[11px] font-medium tracking-[2.5px] uppercase
+           text-[11px] font-medium tracking-[2.5px] uppercase rounded-[var(--r)]
            cursor-pointer transition-all w-full;
   }
   .btn-light:hover { @apply bg-blush2 border-accent; }
 
   .btn-cream-cta {
     @apply bg-cream text-ink border border-cream px-12 py-3.5 font-sans
-           text-[11px] font-medium tracking-[2.5px] uppercase
+           text-[11px] font-medium tracking-[2.5px] uppercase rounded-[var(--r)]
            cursor-pointer transition-all;
   }
   .btn-cream-cta:hover { @apply bg-transparent text-cream; }
@@ -92,12 +95,12 @@ body {
   }
   .form-input {
     @apply w-full bg-white border border-line text-ink px-4 py-[13px] font-sans
-           text-[14px] font-light outline-none appearance-none transition-colors;
+           text-[14px] font-light outline-none appearance-none transition-colors rounded-[var(--r)];
   }
   .form-input:focus { @apply border-accent; }
   .form-select {
     @apply w-full bg-white border border-line text-ink px-4 py-[13px] font-sans
-           text-[14px] font-light outline-none appearance-none cursor-pointer transition-colors;
+           text-[14px] font-light outline-none appearance-none cursor-pointer transition-colors rounded-[var(--r)];
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23A08890' stroke-width='1' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 16px center;
@@ -107,7 +110,7 @@ body {
   /* ── Time-slot buttons (Booking) ── */
   .time-slot {
     @apply bg-white border border-line text-warm px-2 py-2.5 text-[12px] font-normal
-           text-center cursor-pointer transition-all tracking-[0.3px];
+           text-center cursor-pointer transition-all tracking-[0.3px] rounded-[var(--r)];
   }
   .time-slot:hover { @apply border-accent text-ink; }
   .time-slot.selected { @apply bg-dark border-dark text-cream; }

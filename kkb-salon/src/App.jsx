@@ -415,7 +415,7 @@ function ServicesCarousel({ navigate }) {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <div className="overflow-hidden border border-line">
+      <div className="overflow-hidden border border-line rounded-[var(--r)]">
         <div
           className="flex will-change-transform transition-transform duration-[450ms] ease-[cubic-bezier(0.4,0,0.2,1)]"
           style={{ transform: `translateX(-${index * 100}%)` }}
@@ -452,8 +452,8 @@ function ServicesCarousel({ navigate }) {
       </div>
 
       <div className="flex items-center gap-3 mt-7">
-        <button className="w-11 h-11 flex items-center justify-center flex-shrink-0 border border-line bg-cream text-[18px] text-warm cursor-pointer transition-all hover:border-accent hover:text-accent hover:bg-blush disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none" onClick={prev} disabled={index === 0}>←</button>
-        <button className="w-11 h-11 flex items-center justify-center flex-shrink-0 border border-line bg-cream text-[18px] text-warm cursor-pointer transition-all hover:border-accent hover:text-accent hover:bg-blush disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none" onClick={next} disabled={index === maxIndex}>→</button>
+        <button className="w-11 h-11 flex items-center justify-center flex-shrink-0 border border-line bg-cream text-[18px] text-warm cursor-pointer transition-all hover:border-accent hover:text-accent hover:bg-blush disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none rounded-[var(--r)]" onClick={prev} disabled={index === 0}>←</button>
+        <button className="w-11 h-11 flex items-center justify-center flex-shrink-0 border border-line bg-cream text-[18px] text-warm cursor-pointer transition-all hover:border-accent hover:text-accent hover:bg-blush disabled:opacity-30 disabled:cursor-default disabled:pointer-events-none rounded-[var(--r)]" onClick={next} disabled={index === maxIndex}>→</button>
 
         <div className="flex items-center gap-2">
           {Array.from({ length: maxIndex + 1 }).map((_, i) => (
@@ -565,12 +565,12 @@ function HomePage({ navigate }) {
       <section className="bg-blush border-b border-line px-6 md:px-14 py-20 md:py-[100px]">
         <div className="eyebrow">Save more</div>
         <h2 className="display-title mb-12">Our <em>Packages</em></h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {PACKAGES.map(pkg => {
             const light = pkg.featured;
             return (
               <div key={pkg.name}
-                className={`flex flex-col px-9 py-12 cursor-pointer transition-colors ${light ? "bg-dark hover:bg-[#4a3840]" : "bg-blush hover:bg-blush2"}`}
+                className={`relative flex flex-col rounded-[var(--r)] border px-9 py-12 cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.03] hover:z-10 ${light ? "bg-dark border-dark hover:shadow-[0_24px_60px_rgba(58,40,48,0.4)]" : "bg-cream border-line shadow-[0_2px_16px_rgba(58,40,48,0.05)] hover:shadow-[0_24px_60px_rgba(58,40,48,0.18)]"}`}
                 onClick={() => navigate("Booking")}>
                 <span className={`block text-[10px] tracking-[2.5px] uppercase mb-5 ${light ? "text-blush" : "text-accent"}`}>{light ? "Most Requested" : "Package"}</span>
                 <div className={`font-serif text-[32px] leading-[1.1] mb-1.5 ${light ? "text-cream" : "text-ink"}`}>{pkg.name}</div>
@@ -667,12 +667,12 @@ function PackagesPage({ navigate }) {
           <div className="eyebrow">Curated packages</div>
           <h2 className="display-title">Pick Your <em>Package</em></h2>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {PACKAGES.map(pkg => {
             const light = pkg.featured;
             return (
               <div key={pkg.name}
-                className={`flex flex-col px-9 py-12 cursor-pointer transition-colors ${light ? "bg-dark hover:bg-[#4a3840]" : "bg-cream hover:bg-blush"}`}
+                className={`relative flex flex-col rounded-[var(--r)] border px-9 py-12 cursor-pointer transition-all duration-300 hover:-translate-y-1.5 hover:scale-[1.03] hover:z-10 ${light ? "bg-dark border-dark hover:shadow-[0_24px_60px_rgba(58,40,48,0.4)]" : "bg-cream border-line shadow-[0_2px_16px_rgba(58,40,48,0.05)] hover:shadow-[0_24px_60px_rgba(58,40,48,0.18)]"}`}
                 onClick={() => navigate("Booking")}>
                 <span className={`block text-[10px] tracking-[2.5px] uppercase mb-5 ${light ? "text-blush" : "text-accent"}`}>{light ? "Most Requested" : "Package"}</span>
                 <div className={`font-serif text-[32px] leading-[1.1] mb-1.5 ${light ? "text-cream" : "text-ink"}`}>{pkg.name}</div>
@@ -1320,7 +1320,7 @@ function StylistsPage({ navigate }) {
       <section className="bg-cream px-6 md:px-14 py-12 md:py-20 flex flex-col items-center">
         <div className="eyebrow">Your stylist</div>
 
-        <div className="w-full max-w-[720px] mt-14 border border-line overflow-hidden grid grid-cols-1 md:grid-cols-[280px_1fr] transition-shadow hover:shadow-[0_8px_40px_rgba(58,40,48,0.10)]">
+        <div className="w-full max-w-[720px] mt-14 border border-line overflow-hidden rounded-[var(--r)] grid grid-cols-1 md:grid-cols-[280px_1fr] transition-shadow hover:shadow-[0_8px_40px_rgba(58,40,48,0.10)]">
           {/* Left — avatar panel */}
           <div className="relative overflow-hidden flex items-center justify-center bg-blush2 min-h-[240px] md:min-h-[360px] border-b md:border-b-0 md:border-r border-line">
             <div className="absolute bottom-[-20px] right-[-10px] font-serif italic font-light text-[160px] leading-none text-accent/10 select-none">✦</div>
@@ -1369,7 +1369,7 @@ function GalleryPage({ navigate }) {
             onClick={() => setActive(c)}>{c}</button>
         ))}
       </div>
-      <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-line p-px mx-6 md:mx-14 mt-6 md:mt-8 mb-12 md:mb-16">
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-line p-px mx-6 md:mx-14 mt-6 md:mt-8 mb-12 md:mb-16 rounded-[var(--r)] overflow-hidden">
         {filtered.map((item, i) => (
           <div key={i}
             className={`group relative overflow-hidden flex items-center justify-center aspect-[3/4] text-[48px] cursor-pointer ${i % 2 ? "bg-blush2" : "bg-blush"}`}>
@@ -1412,7 +1412,7 @@ function AboutPage({ navigate }) {
       <div className="bg-blush px-6 md:px-14 py-14 md:py-20">
         <div className="eyebrow">What we stand for</div>
         <h2 className="display-title">Our <em>Values</em></h2>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line mt-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-line border border-line mt-12 rounded-[var(--r)] overflow-hidden">
           {[
             { n:"01", title:"Craft First",      desc:"Every cut, every color is a deliberate act of craft. No shortcuts, no compromises, no bad days in our chairs." },
             { n:"02", title:"Everyone Welcome", desc:"Young, old, all textures, all budgets. This is a salon built for real people living real and beautiful lives." },

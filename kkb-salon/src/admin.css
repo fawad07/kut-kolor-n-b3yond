@@ -50,7 +50,7 @@ body {
 
 /* ── Dashboard stat cards ── */
 .admin-stats { @apply grid grid-cols-4 gap-px bg-line border border-line mb-12; }
-.admin-stat-card { @apply bg-panel px-6 py-7 transition-colors relative; }
+.admin-stat-card { @apply bg-panel px-6 py-7 transition-colors relative rounded-[var(--r)]; }
 .admin-stat-card::before {
   content: ''; position: absolute; top: 0; left: 0;
   width: 0; height: 2px; background: #C4748A; transition: width 0.3s ease;
@@ -65,7 +65,7 @@ body {
 
 /* ── Table ── */
 .admin-table-wrap {
-  @apply bg-panel border border-line overflow-x-auto mb-8;
+  @apply bg-panel border border-line overflow-x-auto mb-8 rounded-[var(--r)];
   scrollbar-width: thin; scrollbar-color: #DEC8CE transparent;
 }
 .admin-table-wrap::-webkit-scrollbar { height: 8px; }
@@ -87,7 +87,7 @@ body {
 .admin-table tr:hover td { @apply bg-[#FDF4F6]; }
 
 /* ── Status badges ── */
-.status-badge { @apply inline-block px-2.5 py-[3px] text-[10px] font-medium tracking-[1.5px] uppercase; }
+.status-badge { @apply inline-block px-2.5 py-[3px] text-[10px] font-medium tracking-[1.5px] uppercase rounded-[var(--r)]; }
 .status-pending   { @apply bg-[rgba(196,116,138,0.12)] text-accent border border-[rgba(196,116,138,0.25)]; }
 .status-confirmed { @apply bg-[rgba(58,40,48,0.08)] text-dark border border-[rgba(58,40,48,0.15)]; }
 .status-cancelled { @apply bg-[rgba(160,136,144,0.10)] text-muted border border-[rgba(160,136,144,0.2)]; }
@@ -98,7 +98,7 @@ body {
 
 /* ── Action buttons ── */
 .admin-btn {
-  @apply text-[10px] font-medium tracking-[1.5px] uppercase px-3.5 py-1.5 border border-line bg-transparent text-muted cursor-pointer transition-all font-sans whitespace-nowrap;
+  @apply text-[10px] font-medium tracking-[1.5px] uppercase px-3.5 py-1.5 border border-line bg-transparent text-muted cursor-pointer transition-all font-sans whitespace-nowrap rounded-[var(--r)];
 }
 .admin-btn:hover          { @apply border-accent text-accent bg-[rgba(196,116,138,0.06)]; }
 .admin-btn.confirm        { @apply border-[rgba(58,40,48,0.3)] text-dark; }
@@ -115,7 +115,7 @@ body {
 /* ── Filter bar ── */
 .admin-filters { @apply flex gap-2 mb-5 flex-wrap; }
 .admin-filter-btn {
-  @apply text-[10px] tracking-[2px] uppercase px-4 py-[7px] border border-line bg-transparent text-muted cursor-pointer transition-all font-sans;
+  @apply text-[10px] tracking-[2px] uppercase px-4 py-[7px] border border-line bg-transparent text-muted cursor-pointer transition-all font-sans rounded-[var(--r)];
 }
 .admin-filter-btn:hover { @apply border-accent text-accent; }
 .admin-filter-btn.active { @apply border-accent text-accent bg-[rgba(196,116,138,0.08)]; }
@@ -130,7 +130,7 @@ body {
   @apply fixed inset-0 z-[200] bg-[rgba(58,40,48,0.5)] flex items-center justify-center p-6;
 }
 .admin-modal {
-  @apply bg-panel border border-line w-full max-w-[560px] max-h-[90vh] overflow-y-auto p-10;
+  @apply bg-panel border border-line w-full max-w-[560px] max-h-[90vh] overflow-y-auto p-10 rounded-[var(--r)];
 }
 .admin-modal-title {
   @apply font-serif italic text-[28px] font-normal text-ink mb-7 pb-4 border-b border-line;
@@ -140,14 +140,14 @@ body {
   @apply block text-[10px] font-medium tracking-[2px] uppercase text-muted mb-2;
 }
 .admin-form-input {
-  @apply w-full bg-white border border-line text-ink px-3.5 py-[11px] font-sans text-[13px] outline-none transition-colors;
+  @apply w-full bg-white border border-line text-ink px-3.5 py-[11px] font-sans text-[13px] outline-none transition-colors rounded-[var(--r)];
 }
 .admin-form-input:focus { @apply border-accent; }
 .admin-modal-actions { @apply flex gap-2.5 mt-7 pt-5 border-t border-line; }
 
 /* ── Toast ── */
 .admin-toast {
-  @apply fixed bottom-7 right-7 z-[300] bg-panel border border-line border-l-[3px] border-l-accent px-5 py-3.5 text-[13px] text-dark max-w-[320px] shadow-[0_4px_20px_rgba(58,40,48,0.1)];
+  @apply fixed bottom-7 right-7 z-[300] bg-panel border border-line border-l-[3px] border-l-accent px-5 py-3.5 text-[13px] text-dark max-w-[320px] shadow-[0_4px_20px_rgba(58,40,48,0.1)] rounded-[var(--r)];
   animation: toast-in 0.3s ease;
 }
 .admin-toast.error { @apply border-l-muted; }
@@ -194,7 +194,7 @@ body {
 .log-category { @apply text-[10px] tracking-[1.5px] uppercase text-muted; }
 .log-message { @apply text-dark leading-[1.5]; }
 .log-message-detail { @apply mt-1 text-[11px] text-muted font-mono leading-[1.6]; }
-.log-wrap { @apply bg-panel border border-line overflow-x-auto mb-8 max-h-[600px] overflow-y-auto; }
+.log-wrap { @apply bg-panel border border-line overflow-x-auto mb-8 max-h-[600px] overflow-y-auto rounded-[var(--r)]; }
 .log-header {
   @apply flex items-center justify-between px-5 py-3.5 border-b border-line bg-[#F9EEF0] sticky top-0 z-[1];
 }
@@ -214,7 +214,7 @@ body {
 }
 .training-replay:hover { @apply border-accent text-accent bg-[rgba(196,116,138,0.06)]; }
 .training-sections { @apply flex flex-col gap-2.5; }
-.training-section { @apply bg-panel border border-line overflow-hidden; }
+.training-section { @apply bg-panel border border-line overflow-hidden rounded-[var(--r)]; }
 .training-section-header { @apply flex items-center justify-between px-5 py-4 cursor-pointer transition-colors; }
 .training-section-header:hover { @apply bg-[#F9EEF0]; }
 .training-section-left { @apply flex items-center gap-3.5; }
@@ -241,7 +241,7 @@ body {
   @apply fixed top-0 left-[220px] right-0 bottom-0 bg-[rgba(58,40,48,0.45)] z-[150] flex items-start justify-end px-14 pt-24 pb-0;
 }
 .tour-card {
-  @apply bg-panel border border-line2 w-[290px] p-[22px] shadow-[0_8px_30px_rgba(58,40,48,0.25)];
+  @apply bg-panel border border-line2 w-[290px] p-[22px] shadow-[0_8px_30px_rgba(58,40,48,0.25)] rounded-[var(--r)];
   animation: toast-in 0.25s ease;
 }
 .tour-card-title { @apply font-serif italic text-[22px] font-normal text-ink mb-2.5; }
