@@ -37,16 +37,19 @@ const STYLISTS = [
   { emoji:"💇‍♀️", name:"Samina Aleem", title:"Master Stylist", bio:"12 years specializing in precision cuts and lived-in color. Renowned for her balayage work.", tags:["Balayage","Precision Cuts","Color"] },
 ];
 
+// Gallery items. `img` points at a file in public/gallery/ — drop a photo
+// with that exact name and it replaces the emoji automatically. Until the
+// file exists, the emoji placeholder shows (see GalleryTile fallback).
 const GALLERY_ITEMS = [
-  { emoji:"💇‍♀️", label:"Balayage",        category:"Color"      },
-  { emoji:"✂️",   label:"Precision Cut",   category:"Cuts"       },
-  { emoji:"🌈",   label:"Full Color",       category:"Color"      },
-  { emoji:"💈",   label:"Men's Cut",        category:"Cuts"       },
-  { emoji:"✨",   label:"Highlights",       category:"Color"      },
-  { emoji:"💁‍♀️", label:"Blowout",          category:"Style"      },
-  { emoji:"🎨",   label:"Color Correction", category:"Color"      },
-  { emoji:"💆‍♀️", label:"Treatment",        category:"Treatments" },
-  { emoji:"🌟",   label:"Keratin",          category:"Treatments" },
+  { img:"/gallery/balayage.jpg",         emoji:"💇‍♀️", label:"Balayage",        category:"Color"      },
+  { img:"/gallery/precision-cut.jpg",    emoji:"✂️",   label:"Precision Cut",   category:"Cuts"       },
+  { img:"/gallery/full-color.jpg",       emoji:"🌈",   label:"Full Color",       category:"Color"      },
+  { img:"/gallery/mens-cut.jpg",         emoji:"💈",   label:"Men's Cut",        category:"Cuts"       },
+  { img:"/gallery/highlights.jpg",       emoji:"✨",   label:"Highlights",       category:"Color"      },
+  { img:"/gallery/blowout.jpg",          emoji:"💁‍♀️", label:"Blowout",          category:"Style"      },
+  { img:"/gallery/color-correction.jpg", emoji:"🎨",   label:"Color Correction", category:"Color"      },
+  { img:"/gallery/treatment.jpg",        emoji:"💆‍♀️", label:"Treatment",        category:"Treatments" },
+  { img:"/gallery/keratin.jpg",          emoji:"🌟",   label:"Keratin",          category:"Treatments" },
 ];
 
 const NAV_ITEMS  = ["Home","Services","Packages","Booking","Stylists","Gallery","About","Contact"];
@@ -1371,19 +1374,33 @@ function GalleryPage({ navigate }) {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-3 gap-px bg-line p-px mx-6 md:mx-14 mt-6 md:mt-8 mb-12 md:mb-16 rounded-[var(--r)] overflow-hidden">
         {filtered.map((item, i) => (
-          <div key={i}
-            className={`group relative overflow-hidden flex items-center justify-center aspect-[3/4] text-[48px] cursor-pointer ${i % 2 ? "bg-blush2" : "bg-blush"}`}>
-            {item.emoji}
-            <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[rgba(58,40,48,0.88)] opacity-0 transition-opacity group-hover:opacity-100">
-              <div className="font-serif italic text-[22px] text-cream">{item.label}</div>
-              <button className="btn-outline text-cream border-cream/30 px-7 py-2.5" onClick={() => navigate("Booking")}>
-                Book This Look
-              </button>
-            </div>
-          </div>
+          <GalleryTile key={i} item={item} fallbackBg={i % 2 ? "bg-blush2" : "bg-blush"} navigate={navigate} />
         ))}
       </div>
       <Footer navigate={navigate} />
+    </div>
+  );
+}
+
+// One gallery tile. Shows the real photo (item.img) once it exists in
+// public/gallery/; until then (or if the file is missing) it gracefully
+// falls back to the emoji placeholder — so it's plug-and-play: drop the
+// correctly-named photos into public/gallery/ and they appear automatically.
+function GalleryTile({ item, fallbackBg, navigate }) {
+  const [imgError, setImgError] = useState(false);
+  const showImg = item.img && !imgError;
+  return (
+    <div className={`group relative overflow-hidden flex items-center justify-center aspect-[3/4] cursor-pointer ${showImg ? "bg-dark" : `text-[48px] ${fallbackBg}`}`}>
+      {showImg
+        ? <img src={item.img} alt={item.alt || item.label} onError={() => setImgError(true)}
+            className="w-full h-full object-cover" loading="lazy" />
+        : item.emoji}
+      <div className="absolute inset-0 flex flex-col items-center justify-center gap-4 bg-[rgba(58,40,48,0.88)] opacity-0 transition-opacity group-hover:opacity-100">
+        <div className="font-serif italic text-[22px] text-cream">{item.label}</div>
+        <button className="btn-outline text-cream border-cream/30 px-7 py-2.5" onClick={() => navigate("Booking")}>
+          Book This Look
+        </button>
+      </div>
     </div>
   );
 }
