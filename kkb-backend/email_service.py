@@ -253,3 +253,27 @@ def send_fee_charged_email(booking) -> bool:
         subject=f"Cancellation Fee Charged — KKB-{str(booking.id).zfill(4)}",
         html=_wrap_email("Cancellation Fee", ROSE, body_html),
     )
+
+
+def send_fee_failed_email(booking) -> bool:
+    """Sent when a cancellation-fee charge could not be completed."""
+    amount = f"${float(booking.fee_amount):.2f}" if booking.fee_amount else "a cancellation fee"
+    card = (f"your {booking.card_brand} card ending in {booking.card_last4}"
+            if booking.card_last4 else "the card on file")
+    body_html = f"""
+      <p style="font-size: 15px; color: {WARM}; line-height: 1.7; font-family: Arial, sans-serif;">
+        Hi {booking.full_name},<br/><br/>
+        We tried to charge a cancellation fee of <strong style="color:{DARK};">{amount}</strong>
+        to {card}, but the payment did <strong style="color:{DARK};">not go through</strong>.
+      </p>
+      {_details_table(booking)}
+      <p style="font-size: 13px; color: {WARM}; line-height: 1.7; font-family: Arial, sans-serif;">
+        No action is needed right now — we&#39;ll be in touch to sort it out. If you&#39;d like to
+        resolve it sooner or have any questions, please give us a call. Thank you.
+      </p>
+    """
+    return _send(
+        to_email=booking.email,
+        subject=f"Payment Issue — Cancellation Fee — KKB-{str(booking.id).zfill(4)}",
+        html=_wrap_email("Payment Issue", ROSE, body_html),
+    )

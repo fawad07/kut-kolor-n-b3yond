@@ -15,7 +15,7 @@ import re
 from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel, EmailStr, field_validator
-from models import BookingStatus, ContactStatus
+from models import BookingStatus, ContactStatus, PaymentStatus
 
 # US phone — 10 digits after stripping formatting characters
 US_PHONE_RE = re.compile(r"^\D*(\d\D*){10}$")
@@ -103,6 +103,9 @@ class BookingOut(BaseModel):
     preferred_time: str
     notes:          Optional[str]
     status:         BookingStatus
+    payment_status: Optional[PaymentStatus] = None
+    card_brand:     Optional[str] = None
+    card_last4:     Optional[str] = None
     consent_agreed: bool
     consent_at:     Optional[datetime]
     created_at:     datetime

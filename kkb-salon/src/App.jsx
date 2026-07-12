@@ -1837,10 +1837,14 @@ function AdminBookings({ bookings, onRefresh, showToast }) {
   const [waiveFee,      setWaiveFee]      = useState(false);
   const [chargeReason,  setChargeReason]  = useState("cancellation");
   const [chargeLoading, setChargeLoading] = useState(false);
+  const [chargeNonce,   setChargeNonce]   = useState("");
 
-  // Apply status filter first, then search across name, phone, email, ref
+  // Apply status filter first, then search across name, phone, email, ref.
+  // "fee_failed" filters by payment status (a fee charge that didn't go through).
   const filtered = bookings
-    .filter(b => filter === "all" || b.status === filter)
+    .filter(b => filter === "all" ? true
+               : filter === "fee_failed" ? b.payment_status === "fee_failed"
+               : b.status === filter)
     .filter(b => {
       if (!search.trim()) return true;
       const q       = search.trim().toLowerCase();
@@ -1941,6 +1945,9 @@ function AdminBookings({ bookings, onRefresh, showToast }) {
     // Default to waiving — opening this modal should never pre-arm a charge.
     // The admin opts into charging by selecting "Charge cancellation fee".
     setWaiveFee(true);
+    // Fresh idempotency nonce per modal open — a double-click reuses it (Stripe
+    // dedupes), but a new charge attempt (reopen) gets a new one.
+    setChargeNonce(crypto.randomUUID());
     setCancelBooking(booking);
   }
 
@@ -1956,6 +1963,7 @@ function AdminBookings({ bookings, onRefresh, showToast }) {
           amount: waiveFee ? 0 : parseFloat(feeAmount) || 0,
           reason: chargeReason,
           waive:  waiveFee || !feeAmount,
+          idempotency_key: chargeNonce,
         }),
       });
       const data = await res.json();
@@ -2177,20 +2185,23 @@ function AdminBookings({ bookings, onRefresh, showToast }) {
 
       {/* ── Status filters ── */}
       <div className="admin-filters">
-        {["all","pending","confirmed","cancelled","completed"].map(f => (
-          <button
-            key={f}
-            className={`admin-filter-btn ${filter === f ? "active" : ""}`}
-            onClick={() => setFilter(f)}
-          >
-            {f}
-            {f === "pending" && bookings.filter(b => b.status === "pending").length > 0 &&
-              <span style={{ marginLeft: "6px", color: "#e8a838" }}>
-                ({bookings.filter(b => b.status === "pending").length})
-              </span>
-            }
-          </button>
-        ))}
+        {["all","pending","confirmed","cancelled","completed","fee_failed"].map(f => {
+          const feeFailedCount = bookings.filter(b => b.payment_status === "fee_failed").length;
+          const pendingCount   = bookings.filter(b => b.status === "pending").length;
+          return (
+            <button
+              key={f}
+              className={`admin-filter-btn ${filter === f ? "active" : ""}`}
+              onClick={() => setFilter(f)}
+            >
+              {f === "fee_failed" ? "Fee Failed" : f}
+              {f === "pending" && pendingCount > 0 &&
+                <span style={{ marginLeft: "6px", color: "#e8a838" }}>({pendingCount})</span>}
+              {f === "fee_failed" && feeFailedCount > 0 &&
+                <span style={{ marginLeft: "6px", color: "#C4748A" }}>({feeFailedCount})</span>}
+            </button>
+          );
+        })}
       </div>
 
       <div className="admin-table-wrap">

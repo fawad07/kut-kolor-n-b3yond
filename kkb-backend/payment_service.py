@@ -150,6 +150,7 @@ def charge_cancellation_fee(
     booking,
     amount_dollars: float,
     reason: str = "cancellation",
+    idempotency_key: str = None,
 ) -> dict:
     """
     Charges the saved card on file for a cancellation fee.
@@ -173,6 +174,10 @@ def charge_cancellation_fee(
 
     amount_cents = int(round(amount_dollars * 100))
 
+    # Stripe idempotency — a repeated request with the same key (e.g. an admin
+    # double-submit) is de-duplicated by Stripe and never charges twice.
+    extra_opts = {"idempotency_key": idempotency_key} if idempotency_key else {}
+
     try:
         intent = stripe.PaymentIntent.create(
             amount=amount_cents,
@@ -182,6 +187,7 @@ def charge_cancellation_fee(
             confirmation_method="automatic",
             confirm=True,
             off_session=True,   # charge without customer present
+            **extra_opts,
             description=(
                 f"KKB Cancellation Fee — {reason.replace('_', ' ').title()} "
                 f"— Booking KKB-{str(booking.id).zfill(4)} "

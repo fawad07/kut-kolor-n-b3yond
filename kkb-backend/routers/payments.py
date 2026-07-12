@@ -50,9 +50,10 @@ class SaveCardRequest(BaseModel):
 
 
 class ChargeFeeRequest(BaseModel):
-    amount:        float           # dollars e.g. 25.00
-    reason:        str             # no_show | late_cancellation | cancellation
-    waive:         bool = False    # True = admin chose to waive, just cancel
+    amount:          float           # dollars e.g. 25.00
+    reason:          str             # no_show | late_cancellation | cancellation
+    waive:           bool = False    # True = admin chose to waive, just cancel
+    idempotency_key: Optional[str] = None  # per-attempt nonce — prevents double-charge on double-submit
 
 
 # ── Helpers ───────────────────────────────────────────────
@@ -239,6 +240,7 @@ def charge_fee(
             booking=booking,
             amount_dollars=payload.amount,
             reason=reason,
+            idempotency_key=payload.idempotency_key,
         )
 
         # Update booking record
@@ -266,8 +268,12 @@ def charge_fee(
         }
 
     except Exception as e:
-        # Mark charge as failed but still allow admin to cancel the booking
+        # Charge failed. Do NOT cancel the booking. Record the failed attempt
+        # (amount + reason) so it's visible for follow-up, keep the card on file
+        # so the admin can retry, and notify the client that a charge failed.
         booking.payment_status = PaymentStatus.fee_failed
+        booking.fee_amount     = payload.amount
+        booking.charge_reason  = reason
         db.commit()
 
         logger.error(
@@ -276,6 +282,14 @@ def charge_fee(
                    "booking_id": booking_id, "amount": payload.amount,
                    "reason": str(e)},
         )
+
+        # Best-effort: let the client know the charge didn't go through.
+        try:
+            from email_service import send_fee_failed_email
+            send_fee_failed_email(booking)
+        except Exception:
+            pass
+
         raise HTTPException(
             status_code=status.HTTP_402_PAYMENT_REQUIRED,
             detail=f"Card charge failed: {str(e)}. Booking has not been cancelled.",

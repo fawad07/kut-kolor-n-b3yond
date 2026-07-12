@@ -239,6 +239,18 @@ check("Request entries include method, path and IP",
 check("Log-viewer endpoint is skipped (no self-logging)",
       all(not str(getattr(r, "path", "")).startswith("/logs") for r in _req_captured))
 
+print("\n── Cancellation fee guards (Stripe-free) ────────────")
+fbid = client.post("/bookings/", json=booking(preferred_time="7:00 PM")).json()["id"]
+r_nocard = client.post(f"/payments/charge-fee/{fbid}",
+                       json={"amount": 25, "reason": "cancellation", "waive": False}, headers=authed)
+check("Charge fee with no card on file → 400", r_nocard.status_code == 400, f"got {r_nocard.status_code}")
+r_waive = client.post(f"/payments/charge-fee/{fbid}",
+                      json={"amount": 0, "reason": "cancellation", "waive": True}, headers=authed)
+check("Waive fee cancels booking → 200", r_waive.status_code == 200, r_waive.text)
+gb = client.get(f"/bookings/{fbid}", headers=authed).json()
+check("Waived booking is cancelled", gb.get("status") == "cancelled", str(gb.get("status")))
+check("BookingOut now exposes payment_status", "payment_status" in gb)
+
 print("\n══════════════════════════════════════════════════════")
 print(f"  PASSED: {len(PASSED)}    FAILED: {len(FAILED)}")
 if FAILED:
